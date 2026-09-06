@@ -1,12 +1,15 @@
 import type { Metadata } from "next";
 import PageHeader from "@/components/PageHeader";
-import Reveal from "@/components/Reveal";
-import { PROJECTS, COMBINED_VALUE } from "@/lib/projects";
+import SectionHead from "@/components/SectionHead";
+import WorkList from "@/components/WorkList";
+import ClientList from "@/components/ClientList";
+import { RECORD } from "@/lib/projects";
+import { CLIENTS } from "@/lib/clients";
 
 export const metadata: Metadata = {
   title: "Projects",
   description:
-    "Sakokhule Trading's completed projects — R31.5m+ in civil works delivered for mines, a national roads agency, a municipality and a maintenance subcontract.",
+    "Completed contracts for SANRAL, Nkomati Anthracite Coal Mine, Nkomazi Municipality, Public Works and VEA Road Maintenance — roads, earthworks and mining haulage across Mpumalanga.",
   alternates: { canonical: "/company/projects" },
 };
 
@@ -15,39 +18,38 @@ export default function ProjectsPage() {
     <>
       <PageHeader
         eyebrow="Projects"
-        title="Completed projects."
-        lede="A track record of civil works delivered across Mpumalanga, for mines, a national roads agency, a local municipality and a subcontracted maintenance programme."
+        title="Contracts completed since 2016."
+        lede="Roads, earthworks and mining haulage delivered across Mpumalanga for a national roads agency, an anthracite mine, a local municipality, a public-sector roads client and a principal maintenance contractor."
+        meta={[
+          { label: "Completed contracts", value: RECORD.contracts },
+          { label: "Clients", value: String(CLIENTS.length) },
+          { label: "Combined value", value: RECORD.combinedValueLong },
+          { label: "Trading since", value: RECORD.founded },
+        ]}
       />
 
-      <section aria-label="Completed projects" className="shell band pt-0">
-        <div className="divide-y divide-[--rule] border-t border-[--rule]">
-          {PROJECTS.map((p, i) => (
-            <Reveal key={p.name} delay={(i % 5) * 70}>
-              <div className="flex flex-wrap items-baseline justify-between gap-x-8 gap-y-3 py-7">
-                <div>
-                  <span className="label text-steel">{String(i + 1).padStart(2, "0")}</span>
-                  <p className="mt-2 text-[1.1875rem] text-bone">
-                    {p.client} <span className="text-steel">— {p.name}</span>
-                  </p>
-                  <p className="value mt-2 text-steel">{p.location}</p>
-                </div>
-                <div className="text-right">
-                  <p className="figure text-[1.25rem] text-blue">{p.value}</p>
-                  <p className="value mt-2 text-steel">{p.period}</p>
-                </div>
-              </div>
-            </Reveal>
-          ))}
-        </div>
-
-        <Reveal>
-          <div className="mt-10 flex flex-wrap items-center justify-between gap-4 border-t border-[--rule-strong] bg-bitumen px-6 py-6 sm:px-8">
-            <span className="label text-steel">Combined contract value on record</span>
-            <span className="figure text-[length:var(--step-title)] text-bone">
-              {COMBINED_VALUE}
-            </span>
+      <section aria-labelledby="record" className="grain">
+        <div className="shell band pt-[clamp(2rem,4vw,3rem)]">
+        <SectionHead index="01" label="The record" title="Contract by contract." />
+        <div className="mt-[clamp(2.5rem,5vw,3.5rem)]">
+          <WorkList notes />
           </div>
-        </Reveal>
+        </div>
+      </section>
+
+      <section
+        aria-labelledby="clients"
+        className="dust border-t border-hair"
+      >
+        <div className="shell band">
+          <SectionHead
+            index="02"
+            label="Clients"
+            title="The organisations behind those contracts."
+            lede="No client logos are reproduced here. None were supplied, and a contractor borrowing a client's mark makes a claim it has no right to make — so each is set in plain type with a description of what it is."
+          />
+          <ClientList className="mt-[clamp(2.5rem,5vw,3.5rem)]" />
+        </div>
       </section>
     </>
   );

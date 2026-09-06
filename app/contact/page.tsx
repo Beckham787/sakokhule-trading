@@ -6,7 +6,7 @@ import { company } from "@/lib/content";
 export const metadata: Metadata = {
   title: "Contact",
   description:
-    "Contact Sakokhule Trading — WhatsApp, telephone and office address in Malelane, Mpumalanga.",
+    "Contact Sakokhule Trading — WhatsApp, telephone, email, bid office and the registered office in Malelane, Mpumalanga.",
   alternates: { canonical: "/contact" },
 };
 
@@ -17,66 +17,91 @@ export default function ContactPage() {
     <>
       <PageHeader
         eyebrow="Contact"
-        title="Get in touch."
-        lede="WhatsApp is the quickest way through."
+        title="Talk to the office."
+        lede="WhatsApp is the quickest route through. For tender documents and bid queries, the bid office address below goes straight to the right desk."
       />
 
-      <section aria-label="Contact details" className="shell band pt-0">
-        <div className="grid gap-x-[var(--gutter)] gap-y-12 lg:grid-cols-2">
-          <Reveal>
+      <section aria-label="Contact details" className="shell band pt-[clamp(1rem,2vw,2rem)]">
+        <div className="grid gap-x-[var(--gutter)] gap-y-14 lg:grid-cols-12">
+          <Reveal className="lg:col-span-7">
             <a
               href={company.whatsapp}
               target="_blank"
               rel="noopener noreferrer"
-              className="label inline-block bg-blue px-8 py-5 text-asphalt transition-colors duration-300 hover:bg-blue-lift"
+              className="btn label"
             >
               WhatsApp {company.whatsappNumber}
             </a>
 
-            <ul className="mt-11 space-y-7 border-t border-[--rule] pt-8">
+            <dl className="mt-12 border-t border-hair">
               {company.phones.map((p, i) => (
-                <li key={p}>
-                  <span className="label text-steel">
+                <div
+                  key={p}
+                  className="grid gap-x-[var(--gutter)] gap-y-1 border-b border-hair py-5 sm:grid-cols-3"
+                >
+                  <dt className="label pt-1 text-fg-mute sm:col-span-1">
                     {i === 0 ? "Telephone" : "Alternative"}
-                  </span>
-                  <a
-                    href={tel(p)}
-                    className="mt-2 block font-display text-[length:var(--step-heading)] tracking-[-0.01em] text-bone transition-colors duration-300 hover:text-blue"
-                  >
-                    {p}
-                  </a>
-                </li>
+                  </dt>
+                  <dd className="sm:col-span-2">
+                    <a
+                      href={tel(p)}
+                      className="rule-link tap font-display text-[length:var(--step-head)] transition-colors duration-300 hover:text-accent"
+                    >
+                      {p}
+                    </a>
+                  </dd>
+                </div>
               ))}
 
-              <li>
-                <span className="label text-steel">Email</span>
-                <a
-                  href={`mailto:${company.email}`}
-                  className="tap link-rule mt-2 block break-all text-bone transition-colors duration-300 hover:text-blue"
-                >
-                  {company.email}
-                </a>
-              </li>
+              <div className="grid gap-x-[var(--gutter)] gap-y-1 border-b border-hair py-5 sm:grid-cols-3">
+                <dt className="label pt-1 text-fg-mute sm:col-span-1">Email</dt>
+                <dd className="sm:col-span-2">
+                  <a
+                    href={`mailto:${company.email}`}
+                    className="rule-link tap value break-all text-fg transition-colors duration-300 hover:text-accent"
+                  >
+                    {company.email}
+                  </a>
+                </dd>
+              </div>
 
-              <li>
-                <span className="label text-steel">Bid office</span>
-                <a
-                  href={`mailto:${company.bidOfficeEmail}`}
-                  className="tap link-rule mt-2 block break-all text-bone transition-colors duration-300 hover:text-blue"
-                >
-                  {company.bidOfficeEmail}
-                </a>
-                <p className="value mt-1.5 text-steel">{company.bidOfficeContact}</p>
-              </li>
-            </ul>
+              <div className="grid gap-x-[var(--gutter)] gap-y-1 border-b border-hair py-5 sm:grid-cols-3">
+                <dt className="label pt-1 text-fg-mute sm:col-span-1">Bid office</dt>
+                <dd className="sm:col-span-2">
+                  <a
+                    href={`mailto:${company.bidOfficeEmail}`}
+                    className="rule-link tap value break-all text-fg transition-colors duration-300 hover:text-accent"
+                  >
+                    {company.bidOfficeEmail}
+                  </a>
+                  <p className="caption mt-2">{company.bidOfficeContact}</p>
+                </dd>
+              </div>
+            </dl>
           </Reveal>
 
-          <Reveal delay={90}>
-            <div className="border border-[--rule] p-8">
-              <span className="label text-steel">Office</span>
-              <p className="mt-4 font-display text-[length:var(--step-heading)] leading-[1.25] tracking-[-0.01em]">
+          <Reveal delay={120} className="lg:col-span-5">
+            <div className="border-t border-hair pt-6">
+              <p className="label text-fg-mute">Registered office</p>
+              <p className="font-display mt-5 text-[length:var(--step-head)] leading-[1.35]">
                 {company.address}
               </p>
+              <p className="caption mt-4">{company.region}, South Africa</p>
+            </div>
+
+            <div className="mt-10 border-t border-hair pt-6">
+              <p className="label text-fg-mute">Sister company</p>
+              <p className="mt-5 text-[0.9375rem] leading-relaxed text-fg-soft">
+                Izanolihle Roads works from the same yard and the same fleet
+                under the same principal. They are separate registered
+                companies, and each holds its own contracts.
+              </p>
+              <a
+                href="https://izanolihleroads.co.za"
+                className="rule-link tap mt-5 inline-block text-[0.9375rem] text-fg transition-colors duration-300 hover:text-accent"
+              >
+                izanolihleroads.co.za →
+              </a>
             </div>
           </Reveal>
         </div>

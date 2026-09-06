@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import PageHeader from "@/components/PageHeader";
+import SectionHead from "@/components/SectionHead";
+import FactList from "@/components/FactList";
 import Reveal from "@/components/Reveal";
-import { credentials, about } from "@/lib/content";
+import { credentials, about, company } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "Registration & credentials",
@@ -10,30 +12,31 @@ export const metadata: Metadata = {
   alternates: { canonical: "/company/credentials" },
 };
 
-const CARDS = [
+const REGISTRATION = [
   {
-    tag: "CIDB",
-    title: "Contractor grading",
-    value: credentials.cidb.grading,
-    body: `${credentials.cidb.detail} CRS Number ${credentials.cidb.crsNumber}. ${credentials.cidb.validity}.`,
+    label: "CIDB grading",
+    value: `${credentials.cidb.grading} · ${credentials.cidb.validity}`,
+    note: `${credentials.cidb.detail} CRS number ${credentials.cidb.crsNumber}.`,
   },
   {
-    tag: "B-BBEE",
-    title: "Ownership",
-    value: credentials.bbbee.ownership,
-    body: credentials.bbbee.detail,
-  },
-  {
-    tag: "SARS",
-    title: "Tax compliance",
-    value: credentials.sars.status,
-    body: credentials.sars.detail,
-  },
-  {
-    tag: "CIPC",
-    title: "Company registration",
+    label: "Company registration",
     value: credentials.cipc.regNo,
-    body: `${credentials.cipc.enterpriseType}, registered ${credentials.cipc.registered}. Status: ${credentials.cipc.status}.`,
+    note: `${credentials.cipc.enterpriseType}, registered ${credentials.cipc.registered}. Status: ${credentials.cipc.status}.`,
+  },
+  {
+    label: "Ownership",
+    value: credentials.bbbee.ownership,
+    note: credentials.bbbee.detail,
+  },
+  {
+    label: "Tax compliance",
+    value: credentials.sars.status,
+    note: credentials.sars.detail,
+  },
+  {
+    label: "Registered office",
+    value: company.address,
+    note: `Operating across ${company.region}.`,
   },
 ];
 
@@ -42,42 +45,43 @@ export default function CredentialsPage() {
     <>
       <PageHeader
         eyebrow="Credentials"
-        title="Registration & credentials."
+        title="Registration, grading and compliance."
+        lede="Everything a client, a main contractor or a bid office asks for before the first meeting — set out in one place, as it appears on the certificates."
       />
 
-      <section aria-label="Registration and credentials" className="shell band pt-0">
-        <div className="grid gap-x-[var(--gutter)] gap-y-8 sm:grid-cols-2">
-          {CARDS.map((c, i) => (
-            <Reveal key={c.tag} delay={i * 90}>
-              <div className="border border-[--rule] p-7">
-                <span className="label bg-blue px-2.5 py-1 text-asphalt">{c.tag}</span>
-                <p className="mt-5 text-[0.9375rem] text-steel">{c.title}</p>
-                <p className="figure mt-2 text-[length:var(--step-heading)] text-bone">
-                  {c.value}
-                </p>
-                <p className="mt-3 text-[0.9375rem] leading-relaxed text-bone/70">
-                  {c.body}
-                </p>
-              </div>
-            </Reveal>
-          ))}
+      <section aria-labelledby="registration" className="dust">
+        <div className="shell band pt-[clamp(2.5rem,5vw,4rem)]">
+        <SectionHead index="01" label="On record" title="The certificates behind the work." />
+        <div className="mt-[clamp(2.5rem,5vw,3.5rem)] grid gap-x-[var(--gutter)] lg:grid-cols-12">
+          <div className="lg:col-span-3" />
+          <div className="lg:col-span-9">
+            <FactList facts={REGISTRATION} />
+          </div>
+          </div>
         </div>
+      </section>
 
-        <Reveal>
-          <div className="mt-[clamp(2.5rem,5vw,4rem)] border-t border-[--rule] pt-[clamp(2.5rem,5vw,4rem)]">
-            <span className="label text-steel">
-              Sakokhule Trading subscribes to the key civil policy framework
-            </span>
-            <ul className="mt-5 grid gap-x-[var(--gutter)] gap-y-2.5 sm:grid-cols-2">
+      <section aria-labelledby="policy" className="grain border-t border-hair">
+        <div className="shell band">
+          <SectionHead
+            index="02"
+            label="Policy"
+            title="The framework the company subscribes to."
+          />
+          <div className="mt-[clamp(2.5rem,5vw,3.5rem)] grid gap-x-[var(--gutter)] lg:grid-cols-12">
+            <div className="lg:col-span-3" />
+            <ul className="lg:col-span-9">
               {about.policyFramework.map((p, i) => (
-                <li key={p} className="flex gap-3 text-[0.9375rem] text-bone/75">
-                  <span className="value text-steel">{i + 1}.</span>
-                  {p}
-                </li>
+                <Reveal as="li" key={p} delay={(i % 5) * 55}>
+                  <div className="flex items-baseline gap-6 border-b border-hair py-4">
+                    <span className="index">{String(i + 1).padStart(2, "0")}</span>
+                    <span className="text-[1.0625rem] text-fg-soft">{p}</span>
+                  </div>
+                </Reveal>
               ))}
             </ul>
           </div>
-        </Reveal>
+        </div>
       </section>
     </>
   );

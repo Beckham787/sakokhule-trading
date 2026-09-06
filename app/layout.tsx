@@ -6,14 +6,17 @@ import SiteFooter from "@/components/SiteFooter";
 import { company } from "@/lib/content";
 import "./globals.css";
 
-/* Self-hosted, same three files as Izanolihle Roads — the sister site
-   already worked out why (see that repo's app/layout.tsx comment: the
-   Google Fonts CDN was hanging from this environment). Reusing the exact
-   files also means the two sites' type genuinely matches, not just
-   resembles. */
-const archivo = localFont({
-  src: "../fonts/archivo-variable.woff2",
-  weight: "600 800",
+/* Self-hosted, as on every site in the group — the Google Fonts CDN hangs
+   from this environment, and shipping the files means the two sister sites
+   genuinely share a type system rather than resembling one.
+
+   Source Serif 4 replaces Archivo as the display voice in this edition. A
+   grotesque set in uppercase reads as signage; a text serif at 420 weight,
+   sentence case, reads as a company that has been doing this for a decade.
+   Inter carries body and interface; IBM Plex Mono keeps the record. */
+const sourceSerif = localFont({
+  src: "../fonts/source-serif-variable.woff2",
+  weight: "300 700",
   display: "swap",
   variable: "--font-display",
 });
@@ -37,11 +40,11 @@ const plexMono = localFont({
 export const metadata: Metadata = {
   metadataBase: new URL(company.siteUrl),
   title: {
-    default: `${company.businessName} — civil engineering & construction, Mpumalanga`,
+    default: `${company.businessName} — earth moving & plant hire, Mpumalanga`,
     template: `%s — ${company.businessName}`,
   },
   description:
-    "Civil engineering and construction contractor based in Malelane, Mpumalanga. CIDB 5CE·3GB graded. R31.5m+ in completed roads, civil and mining-haulage contracts.",
+    "Earth moving and plant hire in Malelane, Mpumalanga. Bulk earthworks, load and haul, road layers and machine hire with operators — CIDB 5CE·3GB graded, trading since 2016.",
   openGraph: {
     type: "website",
     title: `${company.businessName} — civil engineering & construction, Mpumalanga`,
@@ -49,13 +52,9 @@ export const metadata: Metadata = {
     locale: "en_ZA",
   },
   alternates: { canonical: "/" },
-  twitter: {
-    card: "summary_large_image",
-  },
+  twitter: { card: "summary_large_image" },
 };
 
-/* GeneralContractor structured data, same pattern as Izanolihle Roads —
-   pulled from lib/content.ts so it can't drift out of sync with the page. */
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "GeneralContractor",
@@ -63,7 +62,7 @@ const jsonLd = {
   legalName: company.legalName,
   url: company.siteUrl,
   description:
-    "Civil engineering and construction contractor — roads, structures and infrastructure — based in Malelane, Mpumalanga.",
+    "Earth moving, load and haul, and plant hire — based in Malelane, Mpumalanga.",
   address: {
     "@type": "PostalAddress",
     streetAddress: "38 Station Street",
@@ -74,14 +73,8 @@ const jsonLd = {
   },
   telephone: company.phones[0],
   email: company.email,
-  areaServed: {
-    "@type": "AdministrativeArea",
-    name: company.region,
-  },
-  founder: {
-    "@type": "Person",
-    name: company.principal,
-  },
+  areaServed: { "@type": "AdministrativeArea", name: company.region },
+  founder: { "@type": "Person", name: company.principal },
 };
 
 export default function RootLayout({
@@ -92,7 +85,7 @@ export default function RootLayout({
   return (
     <html
       lang="en-ZA"
-      className={`${archivo.variable} ${inter.variable} ${plexMono.variable}`}
+      className={`${sourceSerif.variable} ${inter.variable} ${plexMono.variable}`}
     >
       <body>
         <script
@@ -102,7 +95,7 @@ export default function RootLayout({
         />
         <a
           href="#main"
-          className="label sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:bg-blue focus:px-5 focus:py-3 focus:text-asphalt"
+          className="label sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:border focus:border-bone focus:bg-pit focus:px-5 focus:py-3 focus:text-bone"
         >
           Skip to content
         </a>

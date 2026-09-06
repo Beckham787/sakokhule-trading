@@ -7,37 +7,45 @@ import Wordmark from "@/components/Wordmark";
 import { company } from "@/lib/content";
 
 const NAV = [
-  { href: "/", label: "Home" },
   { href: "/company", label: "Company" },
-  { href: "/plant", label: "Plant" },
+  { href: "/company/projects", label: "Projects" },
+  { href: "/fleet", label: "Fleet" },
   { href: "/contact", label: "Contact" },
 ];
 
+/**
+ * The header does almost nothing, on purpose. It sits transparent over the
+ * hero until you leave the top of the page, then the pit ground and a
+ * hairline arrive under it. No blur, no shadow, no colour block.
+ */
 export default function SiteHeader() {
   const [open, setOpen] = useState(false);
+  const [lifted, setLifted] = useState(false);
   const pathname = usePathname();
   const toggleRef = useRef<HTMLButtonElement | null>(null);
 
   const close = useCallback(() => setOpen(false), []);
 
+  useEffect(() => setOpen(false), [pathname]);
+
   useEffect(() => {
-    setOpen(false);
-  }, [pathname]);
+    const onScroll = () => setLifted(window.scrollY > 24);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   useEffect(() => {
     if (!open) return;
-
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         setOpen(false);
         toggleRef.current?.focus();
       }
     };
-
     document.addEventListener("keydown", onKey);
     const prev = document.body.style.overflow;
     document.body.style.overflow = "hidden";
-
     return () => {
       document.removeEventListener("keydown", onKey);
       document.body.style.overflow = prev;
@@ -45,29 +53,35 @@ export default function SiteHeader() {
   }, [open]);
 
   const active = (href: string) =>
-    href === "/" ? pathname === "/" : pathname.startsWith(href);
+    href === "/company" ? pathname === "/company" : pathname.startsWith(href);
 
   return (
     <header className="fixed inset-x-0 top-0 z-50">
-      <div className="relative z-50 bg-asphalt/85 backdrop-blur-sm">
-        <div className="shell flex items-center justify-between gap-6 border-b border-[--rule] py-3.5">
+      <div
+        className={`relative z-50 transition-colors duration-500 ${
+          lifted || open ? "border-b border-hair bg-pit" : "border-b border-transparent"
+        }`}
+      >
+        <div className="shell-wide flex items-center justify-between gap-8 py-4">
           <Link
             href="/"
             onClick={close}
-            className="tap text-bone"
+            className="tap text-fg"
             aria-label={`${company.businessName} — home`}
           >
-            <Wordmark />
+            <Wordmark size={34} onNight />
           </Link>
 
-          <nav aria-label="Primary" className="hidden items-center gap-9 lg:flex">
+          <nav aria-label="Primary" className="hidden items-center gap-10 lg:flex">
             {NAV.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
                 aria-current={active(item.href) ? "page" : undefined}
-                className={`label tap link-rule transition-colors duration-300 ${
-                  active(item.href) ? "text-blue" : "text-bone/70 hover:text-bone"
+                className={`tap text-[0.9375rem] transition-colors duration-300 ${
+                  active(item.href)
+                    ? "text-fg underline decoration-hair-strong underline-offset-[7px]"
+                    : "rule-link text-fg-soft hover:text-fg"
                 }`}
               >
                 {item.label}
@@ -77,7 +91,7 @@ export default function SiteHeader() {
               href={company.whatsapp}
               target="_blank"
               rel="noopener noreferrer"
-              className="label bg-blue px-5 py-3 text-asphalt transition-colors duration-300 hover:bg-blue-lift"
+              className="btn label"
             >
               WhatsApp
             </a>
@@ -89,7 +103,7 @@ export default function SiteHeader() {
             onClick={() => setOpen((v) => !v)}
             aria-expanded={open}
             aria-controls="site-menu"
-            className="label tap text-bone lg:hidden"
+            className="label tap text-fg lg:hidden"
           >
             {open ? "Close" : "Menu"}
           </button>
@@ -99,33 +113,36 @@ export default function SiteHeader() {
       {open && (
         <div
           id="site-menu"
-          className="menu-panel fixed inset-0 z-40 flex flex-col justify-center bg-asphalt lg:hidden"
+          className="grain fixed inset-0 z-40 flex flex-col justify-between bg-pit pt-24 lg:hidden"
         >
-          <nav aria-label="Primary" className="shell flex flex-col gap-1">
+          <nav aria-label="Primary" className="shell flex flex-col">
             {NAV.map((item, i) => (
               <Link
                 key={item.href}
                 href={item.href}
                 onClick={close}
-                style={{ "--d": `${i * 60}ms` } as React.CSSProperties}
-                className={`menu-line font-display border-b border-[--rule] py-5 text-[clamp(1.75rem,7vw,2.75rem)] transition-colors duration-300 ${
-                  active(item.href) ? "text-blue" : "text-bone"
+                style={{ "--d": `${i * 55}ms` } as React.CSSProperties}
+                className={`menu-line font-display border-b border-hair py-6 text-[clamp(1.75rem,7vw,2.5rem)] ${
+                  active(item.href) ? "text-fg-mute" : "text-fg"
                 }`}
               >
                 {item.label}
               </Link>
             ))}
+          </nav>
+
+          <div className="shell pb-12">
             <a
               href={company.whatsapp}
               target="_blank"
               rel="noopener noreferrer"
               onClick={close}
-              style={{ "--d": `${NAV.length * 60}ms` } as React.CSSProperties}
-              className="menu-line label mt-9 self-start bg-blue px-6 py-4 text-asphalt"
+              className="btn label w-full justify-center"
             >
-              WhatsApp us
+              WhatsApp {company.whatsappNumber}
             </a>
-          </nav>
+            <p className="value mt-6 text-fg-mute">{company.address}</p>
+          </div>
         </div>
       )}
     </header>

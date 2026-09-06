@@ -1,21 +1,48 @@
+import Image from "next/image";
+import { company } from "@/lib/content";
+
 /**
- * No transparent/vector logo was supplied — only the mark baked into the
- * company-profile PDF, at a size too small to extract cleanly (same asset
- * gap as GMP Builders; see brand.md). Rebuilt in type instead: SAKOKHULE in
- * bone, TRADING in blue, matching the two-tone treatment already used and
- * approved on the client's own PDF cover. A small diagonal mark stands in
- * for the PDF's angular icon — the same 45° angle as the hazard stripe.
+ * The lockup. Lindokuhle supplied the real logo on 2026-09-06 — the first
+ * time this company has had one on the site at all — so the mark is his,
+ * not ours: the ring, the bars and the rising arrow, keyed off the flat
+ * background of the supplied JPEG (`_source/supplied-2026-09-06/`).
+ *
+ * The name is set beside it rather than using the logo's own baked-in
+ * lettering, which is a default grotesque at low resolution and falls apart
+ * at header size. The mark carries the identity; the type carries the name.
  */
-export default function Wordmark({ className = "" }: { className?: string }) {
+export default function Wordmark({
+  className = "",
+  discipline = true,
+  onNight = false,
+  size = 30,
+}: {
+  className?: string;
+  discipline?: boolean;
+  /** Lifts the mark a little on the dark ground, where the steel ring and
+      the grey bars otherwise sit too close to the background. */
+  onNight?: boolean;
+  size?: number;
+}) {
   return (
-    <span className={`inline-flex items-center gap-2.5 ${className}`}>
-      <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true">
-        <rect x="0" y="0" width="20" height="20" fill="none" />
-        <path d="M3 15 L11 3 L15 3 L7 15 Z" fill="currentColor" className="text-blue" />
-        <path d="M11 15 L15 9 L15 15 Z" fill="currentColor" className="text-bone" />
-      </svg>
-      <span className="wordmark text-[0.95rem] leading-none">
-        SAKOKHULE <span className="text-blue">TRADING</span>
+    <span className={`inline-flex items-center gap-3.5 ${className}`}>
+      <Image
+        src="/images/brand/mark.png"
+        alt=""
+        width={size}
+        height={size}
+        priority
+        className={onNight ? "brightness-125 saturate-[1.05]" : undefined}
+      />
+      <span className="flex flex-col">
+        <span className="font-display text-[1.0625rem] font-medium leading-none tracking-[-0.014em]">
+          {company.businessName}
+        </span>
+        {discipline && (
+          <span className="label mt-[0.45rem] text-[0.5625rem] leading-none text-fg-mute">
+            {company.tagline}
+          </span>
+        )}
       </span>
     </span>
   );

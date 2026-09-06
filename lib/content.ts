@@ -13,9 +13,17 @@ export const company = {
 
   siteUrl: "https://www.sakokhuletrading.co.za",
 
-  tagline: "Civil engineering & construction",
+  /* Straight off the client's own logo, supplied 2026-09-06: "Earth
+     moving and Plant hire". It supersedes the "civil engineering &
+     construction" line the profile PDF led with — the logo is the company
+     describing itself today, and the roads work below is the record that
+     backs it. */
+  tagline: "Earth moving & plant hire",
+  /* Studio-written standfirst (not from the profile PDF). Every claim in it
+     is carried elsewhere on the site: the fleet is lib/fleet.ts, the crews
+     are `about.team`, the province and the work are the contract record. */
   intro:
-    "Grounded in Mpumalanga, built on hands-on civil works — roads, structures and infrastructure delivered with the paperwork to back every claim.",
+    "Earth moving, load and haul, and plant hire out of Malelane — our own machines, our own operators, on mine, municipal and roads contracts across Mpumalanga.",
 
   /* Confirmed by TK, same as Izanolihle Roads' principal — same director,
      separate registered company. */
@@ -36,6 +44,39 @@ export const company = {
     "https://wa.me/27608326712?text=" +
     encodeURIComponent("Good day — I'd like to discuss a civil works project."),
 } as const;
+
+/* ----------------------------------------------------------- disciplines */
+
+export type Discipline = { name: string; body: string; points: string[] };
+
+/**
+ * The two halves of the business, as the client's own logo states them.
+ * The bullet points under each are drawn from `ACTIVITIES` (the profile
+ * PDF's own list) and from the completed contracts in lib/projects.ts —
+ * nothing here is a new capability claim.
+ */
+export const DISCIPLINES: Discipline[] = [
+  {
+    name: "Earth moving",
+    body: "Moving material, and shaping what is left behind. The bulk of the company's contract history is earthworks and road layers.",
+    points: [
+      "Bulk earthworks, excavation and box cutting",
+      "Load and haul, including mining haulage",
+      "Regravelling, road layers and pavement repair",
+      "Drainage, culverts and civil infrastructure",
+    ],
+  },
+  {
+    name: "Plant hire",
+    body: "Machines out to other contractors and site owners, with our own operators on them. The fleet is owned, not sublet.",
+    points: [
+      "Grader, backhoe loader, tipper and water tanker",
+      "Operator supplied with every machine",
+      "Day, week and contract rates",
+      "Mpumalanga-wide, travelling to site",
+    ],
+  },
+];
 
 /* ----------------------------------------------------------------- about */
 

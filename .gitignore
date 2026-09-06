@@ -9,3 +9,8 @@ npm-debug.log*
 .vercel
 *.tsbuildinfo
 next-env.d.ts
+
+# Claude session scratch — screenshots and superseded assets, not source
+Claude outputs/
+_retired-2026-09-06/
+public/new enhanced images/

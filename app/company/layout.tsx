@@ -8,7 +8,7 @@ export default function CompanyLayout({
 }) {
   return (
     <>
-      <div className="h-[3.75rem] sm:h-[4rem]" />
+      <div className="h-[4.5rem]" />
       <CompanyNav />
       {children}
     </>

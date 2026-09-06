@@ -2,40 +2,110 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ------------------------------------------------------------------ tokens */
+/* =====================================================================
+   Sakokhule Trading — the group register, second edition.
+
+   The first edition of this site was dark, uppercase and hazard-striped:
+   it read as a site hoarding. This one is meant to read as the company's
+   head office — paper ground, a serif that carries authority without
+   raising its voice, and the record kept in mono the way a specification
+   or a bill of quantities keeps it.
+
+   Third edition, 2026-09-06: earthed. The second edition was gallery-white
+   and it read like a design studio, not a company that moves dirt for a
+   living. Every colour below is now sampled out of the client's own
+   photographs — the red-brown haul-road soil under the grader, the coal and
+   rock greys of the Nkomati stockpile, the machine ochre — with the steel
+   blue of his logo kept as the cool counterweight.
+
+   Ground rules:
+     · The dark ground is the building. Dust-coloured bands are the rooms
+       you stop and read in.
+     · Nothing is pure white or pure black. Everything is warm.
+     · Headlines are sentence case. Only mono labels are uppercase.
+     · Grain over the dark ground: earth is not a flat fill.
+     · Contract values are set at body scale. The work is the headline.
+   ===================================================================== */
 
 :root {
-  /* Same ground as Izanolihle Roads — the sister site, same yard, same
-     fleet. Two companies, one register. */
-  --asphalt: #131518;
-  --asphalt-lift: #1b1e22;
-  --bitumen: #0c0e10;
+  /* -- sampled straight out of the photographs ---------------------- */
+  /* `scripts/prep-assets.js` output, quantised: the haul road under the
+     grader lands on #A87848–#C07848, the coal and rock at the Nkomati
+     stockpile on #303030–#606060, the machines on #C09048. These are the
+     site's colours now — the ground the company actually works on. */
+  --pit: #14110e;        /* the dark ground — coal, shadow, warm */
+  --pit-lift: #1d1913;   /* raised panels and image wells on the dark */
+  --soil: #6b4a30;       /* haul-road red-brown — rules and edges */
+  --dust: #e8dfd2;       /* road dust settled on paper — the light band */
+  --dust-lift: #ded3c2;  /* the raised light band */
 
-  /* Sampled from the client's own approved company-profile PDF (see
-     brand.md) — the dominant chromatic pixel across the cover and section
-     pages. 5.14:1 on asphalt, enough to carry normal-weight text on the
-     dark ground; blue-lift is hover only. */
-  --blue: #0f8fd4;
-  --blue-lift: #4fb4ef;
+  --bone: #efe7da;       /* text on the dark ground */
+  --ink: #1a1611;        /* text on dust */
 
-  --bone: #e8e6e1;
-  --concrete: #dedbd4;
-  --steel: #9a968e;
-  --slate: #55585c;
+  /* One accent per ground, and never the other's. Ochre is the machine
+     colour and carries the dark (6.3:1); the logo's steel blue carries the
+     dust (5.3:1) and keeps the identity in the palette. `flag` is the
+     logo's red — reserved for the mark itself, never set as text. */
+  --ochre: #c08a3e;
+  --steel: #275e7c;
+  --flag: #d82e0b;
 
-  --rule: rgba(232, 230, 225, 0.16);
-  --rule-strong: rgba(232, 230, 225, 0.34);
-  --rule-dark: rgba(19, 21, 24, 0.18);
+  /* -- semantic tokens ---------------------------------------------- */
+  /* Every component reads these. `.dust` below re-points them, so a light
+     section needs one class and nothing else changes. */
+  --bg: var(--pit);
+  --fg: var(--bone);
+  --fg-soft: #cbbfae;
+  --fg-mute: #93856f;
+  --hair: rgba(239, 231, 218, 0.15);
+  --hair-strong: rgba(239, 231, 218, 0.34);
+  --accent: var(--ochre);
 
-  --gutter: clamp(1.25rem, 5vw, 4.5rem);
-  --shell: 86rem;
-  --section: clamp(4.5rem, 10vw, 9rem);
+  /* -- measure and rhythm ------------------------------------------- */
+  --gutter: clamp(1.25rem, 5vw, 4rem);
+  --shell: 74rem;
+  --shell-wide: 96rem;
+  --band: clamp(4.5rem, 9vw, 8.5rem);
 
-  --step-display: clamp(2.75rem, 8vw, 6.5rem);
-  --step-title: clamp(1.85rem, 4.2vw, 3.25rem);
-  --step-heading: clamp(1.25rem, 2.2vw, 1.75rem);
-  --step-lede: clamp(1.0625rem, 1.5vw, 1.3125rem);
+  /* -- type scale ---------------------------------------------------- */
+  --step-hero: clamp(2.15rem, 4.2vw, 3.7rem);
+  --step-title: clamp(1.65rem, 2.8vw, 2.4rem);
+  --step-head: clamp(1.25rem, 1.9vw, 1.6rem);
+  --step-lede: clamp(1.0625rem, 1.25vw, 1.1875rem);
   --step-label: 0.6875rem;
+}
+
+/* The light room. Same components, re-pointed tokens. */
+.dust {
+  --bg: var(--dust);
+  --fg: var(--ink);
+  --fg-soft: #4a4137;
+  --fg-mute: #6b6053;
+  --hair: rgba(26, 22, 17, 0.16);
+  --hair-strong: rgba(26, 22, 17, 0.32);
+  --accent: var(--steel);
+
+  background-color: var(--bg);
+  color: var(--fg);
+}
+
+.dust-lift {
+  background-color: var(--dust-lift);
+}
+
+/* Kept so a section can be forced back to the dark ground inside a light
+   parent — the fleet band on the company page, for instance. */
+.night {
+  --bg: var(--pit);
+  --fg: var(--bone);
+  --fg-soft: #cbbfae;
+  --fg-mute: #93856f;
+  --hair: rgba(239, 231, 218, 0.15);
+  --hair-strong: rgba(239, 231, 218, 0.34);
+  --accent: var(--ochre);
+
+  background-color: var(--bg);
+  color: var(--fg);
 }
 
 /* -------------------------------------------------------------------- base */
@@ -47,25 +117,27 @@
   }
 
   body {
-    background-color: var(--asphalt);
-    color: var(--bone);
+    background-color: var(--pit);
+    color: var(--fg);
     font-family: var(--font-body), system-ui, sans-serif;
-    font-size: 1.0625rem;
-    line-height: 1.7;
-    letter-spacing: -0.011em;
+    font-size: 1rem;
+    line-height: 1.65;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
   }
 
+  /* The display voice. Sentence case, tight but not cramped, and always
+     with room above and below — the single biggest difference between this
+     edition and the last. */
   h1,
   h2,
   h3,
   .font-display {
-    font-family: var(--font-display), "Arial Narrow", sans-serif;
-    font-weight: 700;
-    letter-spacing: -0.028em;
-    line-height: 1.02;
-    text-transform: uppercase;
+    font-family: var(--font-display), Georgia, serif;
+    font-weight: 400;
+    font-variation-settings: "wght" 440;
+    letter-spacing: -0.014em;
+    line-height: 1.1;
     text-wrap: balance;
   }
 
@@ -74,14 +146,18 @@
   }
 
   :focus-visible {
-    outline: 2px solid var(--blue);
+    outline: 2px solid var(--accent);
     outline-offset: 3px;
-    border-radius: 1px;
   }
 
   ::selection {
-    background: var(--blue);
-    color: var(--asphalt);
+    background: var(--ochre);
+    color: var(--pit);
+  }
+
+  .dust ::selection {
+    background: var(--steel);
+    color: var(--dust);
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -95,7 +171,6 @@
       animation-iteration-count: 1 !important;
       transition-duration: 0.01ms !important;
       animation-delay: 0ms !important;
-      transition-delay: 0ms !important;
     }
   }
 }
@@ -110,77 +185,193 @@
     padding-inline: var(--gutter);
   }
 
-  .band {
-    padding-block: var(--section);
+  .shell-wide {
+    width: 100%;
+    max-width: var(--shell-wide);
+    margin-inline: auto;
+    padding-inline: var(--gutter);
   }
 
-  /* The record voice — every label, reference, time, spec value and contract
-     figure on this site runs in it. Shared with Izanolihle Roads: this is
-     the group's own register, not a per-site accent. */
+  .band {
+    padding-block: var(--band);
+  }
+
+  /* The record voice — labels, references, dates, contract values, spec
+     figures. Carried over from the first edition because it was the one
+     part that was right: an engineering document keeps its numbers in a
+     fixed-pitch face, and so does this. */
   .label {
     font-family: var(--font-mono), ui-monospace, monospace;
     font-size: var(--step-label);
     font-weight: 500;
     line-height: 1.4;
-    letter-spacing: 0.16em;
+    letter-spacing: 0.15em;
     text-transform: uppercase;
   }
 
   .value {
     font-family: var(--font-mono), ui-monospace, monospace;
     font-size: 0.8125rem;
-    line-height: 1.55;
-    letter-spacing: 0.01em;
+    line-height: 1.6;
     font-variant-numeric: tabular-nums;
-  }
-
-  /* Contract values, dates, CIDB/CIPC numbers — anything that is a figure of
-     record gets tabular mono digits so a column of them lines up like a
-     ledger, not prose. */
-  .figure {
-    font-family: var(--font-mono), ui-monospace, monospace;
-    font-variant-numeric: tabular-nums;
-    letter-spacing: -0.01em;
+    letter-spacing: 0.005em;
   }
 
   .lede {
     font-size: var(--step-lede);
-    line-height: 1.65;
+    line-height: 1.62;
+    color: var(--fg-soft);
   }
 
-  .eyebrow {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.8rem;
+  /* Hanging index number — 01, 02, 03. Sections and list rows carry one, so
+     the page reads like a numbered specification rather than a brochure. */
+  .index {
+    font-family: var(--font-mono), ui-monospace, monospace;
+    font-size: var(--step-label);
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    color: var(--fg-mute);
+    font-variant-numeric: tabular-nums;
   }
 
-  .eyebrow::before {
-    content: "";
-    flex: none;
-    width: 1.75rem;
-    height: 2px;
-    background: var(--blue);
-  }
-
-  .wordmark {
-    font-family: var(--font-display), "Arial Narrow", sans-serif;
-    font-weight: 800;
+  .caption {
+    font-family: var(--font-mono), ui-monospace, monospace;
+    font-size: 0.75rem;
+    line-height: 1.6;
     letter-spacing: 0.02em;
-    text-transform: uppercase;
-    line-height: 1;
+    color: var(--fg-mute);
   }
 
-  .link-rule {
+  /* An underline that draws itself, used for every inline link. */
+  .rule-link {
     background-image: linear-gradient(currentColor, currentColor);
     background-size: 0% 1px;
     background-repeat: no-repeat;
     background-position: 0 100%;
-    transition: background-size 400ms cubic-bezier(0.16, 1, 0.3, 1);
+    transition: background-size 420ms cubic-bezier(0.16, 1, 0.3, 1);
   }
 
-  .link-rule:hover,
-  .link-rule:focus-visible {
+  .rule-link:hover,
+  .rule-link:focus-visible {
     background-size: 100% 1px;
+  }
+
+  /* The one button on the site. Outlined, ink on paper; it inverts on
+     hover rather than lighting up. No solid colour slabs anywhere. */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.7rem;
+    padding: 0.95rem 1.6rem;
+    border: 1px solid var(--hair-strong);
+    color: var(--fg);
+    background: transparent;
+    transition:
+      background-color 380ms cubic-bezier(0.16, 1, 0.3, 1),
+      color 380ms cubic-bezier(0.16, 1, 0.3, 1),
+      border-color 380ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .btn:hover,
+  .btn:focus-visible {
+    background: var(--accent);
+    color: var(--pit);
+    border-color: var(--accent);
+  }
+
+  /* ------------------------------------------------------------ the grain */
+  /* Earth is not a flat fill. One tile of monochrome noise, generated inline
+     so it costs no request, laid over the dark ground at 5%. Below the
+     threshold of "texture", above the threshold of "dead colour" — which is
+     most of the difference between this edition and the last. */
+  .grain {
+    position: relative;
+  }
+
+  .grain::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.05;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* ------------------------------------------------------------- hero art */
+  /* Used on the story sequence's content steps — what we do, selected work,
+     registration — where words sit over the photograph and need something
+     dark under them. Anchored to the bottom, where the text lives; the top
+     of the picture is left alone. */
+  .hero-scrim {
+    background:
+      linear-gradient(
+        to bottom,
+        rgba(20, 17, 14, 0) 0%,
+        rgba(20, 17, 14, 0.55) 45%,
+        rgba(20, 17, 14, 0.93) 78%,
+        var(--pit) 100%
+      ),
+      linear-gradient(
+        105deg,
+        rgba(107, 74, 48, 0.42) 0%,
+        rgba(107, 74, 48, 0) 55%
+      );
+  }
+
+  /* The hero step carries no words at all — the client's own instruction —
+     so the picture should actually be seen. Just enough of a top fade to
+     hold the header's nav text, and a whisper of soil at the bottom edge so
+     it hands off to the next (scrimmed) picture without a hard seam. */
+  .hero-scrim-light {
+    background:
+      linear-gradient(
+        to bottom,
+        rgba(20, 17, 14, 0.5) 0%,
+        rgba(20, 17, 14, 0.08) 22%,
+        rgba(20, 17, 14, 0.08) 78%,
+        rgba(20, 17, 14, 0.42) 100%
+      );
+  }
+
+  /* A hairline in the haul-road colour, for the edges that want to be warm
+     rather than neutral — section tops on the dark ground. */
+  .rule-soil {
+    border-color: rgba(107, 74, 48, 0.55);
+  }
+
+  /* The chainage rule — a surveyor's distance markers standing in for a
+     plain rule under a page title. Kept from the first edition, drawn
+     finer: one hairline, ticks at even intervals, nothing else. */
+  .chainage {
+    position: relative;
+    height: 1px;
+    background: var(--hair-strong);
+  }
+
+  .chainage::before {
+    content: "";
+    position: absolute;
+    inset: -4px 0 auto 0;
+    height: 5px;
+    background-image: repeating-linear-gradient(
+      to right,
+      var(--hair-strong) 0,
+      var(--hair-strong) 1px,
+      transparent 1px,
+      transparent 12.5%
+    );
+  }
+
+  /* A survey grid, at the threshold of visibility, for the one band that
+     wants to feel like drawing paper. */
+  .survey {
+    background-image:
+      linear-gradient(to right, var(--hair) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--hair) 1px, transparent 1px);
+    background-size: 6.5rem 6.5rem;
+    background-position: center;
+    opacity: 0.45;
   }
 
   .tap {
@@ -190,65 +381,23 @@
   .tap::after {
     content: "";
     position: absolute;
-    inset: -0.7rem -0.3rem;
-  }
-
-  .menu-panel {
-    animation: menu-fade 340ms ease both;
+    inset: -0.7rem -0.35rem;
   }
 
   .menu-line {
-    animation: menu-line 620ms cubic-bezier(0.16, 1, 0.3, 1) both;
-    animation-delay: calc(120ms + var(--d, 0ms));
-  }
-
-  /* -------------------------------------------------------- hazard divider */
-  /* The group's signature device — a diagonal hazard stripe, drawn from the
-     client's own approved profile-PDF cover band and from what hi-vis, road
-     markings and hazard boards already are on both sites. Marks a section
-     change the way a physical site boundary would. See HazardDivider.tsx. */
-  .hazard-stripes {
-    background-image: repeating-linear-gradient(
-      -45deg,
-      var(--blue) 0,
-      var(--blue) 14px,
-      var(--bitumen) 14px,
-      var(--bitumen) 28px
-    );
-  }
-
-  /* --------------------------------------------------------- chainage rule */
-  /* A surveyor's distance marker, standing in for the plain amber/blue rule
-     under a headline — ticks at even intervals with a running reference
-     number, so the site reads like it's measuring itself. */
-  .chainage {
-    position: relative;
-    height: 2px;
-    background: var(--blue);
-  }
-
-  .chainage::before {
-    content: "";
-    position: absolute;
-    inset: -3px 0 auto 0;
-    height: 8px;
-    background-image: repeating-linear-gradient(
-      to right,
-      var(--blue) 0,
-      var(--blue) 1px,
-      transparent 1px,
-      transparent 12%
-    );
-    background-position: left top;
+    animation: menu-line 640ms cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation-delay: calc(80ms + var(--d, 0ms));
   }
 }
 
-/* ------------------------------------------------------------------ opening */
+/* ---------------------------------------------------------------- opening */
+/* Quieter than the first edition: a short lift and a fade, nothing that
+   announces itself. */
 
 @keyframes rise {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(12px);
   }
   to {
     opacity: 1;
@@ -258,74 +407,43 @@
 
 .rise {
   opacity: 0;
-  animation: rise 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: rise 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-.rise-1 {
-  animation-delay: 0.08s;
-}
-.rise-2 {
-  animation-delay: 0.2s;
-}
-.rise-3 {
-  animation-delay: 0.32s;
-}
-.rise-4 {
-  animation-delay: 0.44s;
-}
-.rise-5 {
-  animation-delay: 0.56s;
-}
+.rise-1 { animation-delay: 0.05s; }
+.rise-2 { animation-delay: 0.16s; }
+.rise-3 { animation-delay: 0.27s; }
+.rise-4 { animation-delay: 0.38s; }
+.rise-5 { animation-delay: 0.49s; }
 
 @keyframes draw {
-  from {
-    transform: scaleX(0);
-  }
-  to {
-    transform: scaleX(1);
-  }
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
 }
 
 .draw {
   transform-origin: left;
-  animation: draw 1.1s cubic-bezier(0.16, 1, 0.3, 1) 0.5s both;
+  animation: draw 1.3s cubic-bezier(0.16, 1, 0.3, 1) 0.35s both;
 }
-
-/* --------------------------------------------------------------------- menu */
 
 @keyframes menu-line {
-  from {
-    opacity: 0;
-    transform: translateY(16px);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: none; }
 }
 
-@keyframes menu-fade {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-/* ------------------------------------------------------------------ reveal */
+/* ----------------------------------------------------------------- reveal */
 
 [data-reveal="armed"] {
   opacity: 0;
-  transform: translateY(14px);
+  transform: translateY(10px);
 }
 
 [data-reveal="in"] {
   opacity: 1;
   transform: none;
   transition:
-    opacity 900ms cubic-bezier(0.16, 1, 0.3, 1),
-    transform 900ms cubic-bezier(0.16, 1, 0.3, 1);
+    opacity 1000ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 1000ms cubic-bezier(0.16, 1, 0.3, 1);
   transition-delay: var(--reveal-delay, 0ms);
 }
 
@@ -334,11 +452,9 @@
     opacity: 1;
     transform: none;
   }
-  .rise {
-    opacity: 1;
-    animation: none;
-  }
+  .rise,
   .draw {
+    opacity: 1;
     animation: none;
   }
 }
