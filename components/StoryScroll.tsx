@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import Image from "next/image";
 import { IMAGES } from "@/lib/images";
+import Reveal from "@/components/Reveal";
 
 export type StoryStep = {
   key: string;
@@ -13,54 +14,99 @@ export type StoryStep = {
   /** Omit for a wordless beat — the hero, and the pause before Registration. */
   content?: ReactNode;
   /**
-   * How much scroll distance this step owns, in svh. Not a container the
-   * words scroll inside — see below — just how long the reader has to sit
-   * with this picture before the next one takes over.
+   * How much scroll distance this step owns, in svh. A floor, not a cap —
+   * if a step's own content ever needs more room than this, its track
+   * simply grows to fit (see the caption note below). Not a container the
+   * words scroll inside — just how long the reader has to sit with this
+   * picture before the next one takes over.
    */
   dwell?: number;
 };
 
 /**
  * The homepage as one held photograph, the way olsonkundig.com does its own
- * front page: the picture changes under you, and the caption that goes with
- * it sits in one fixed spot on the screen and stays there — it does not
- * ride up with the scroll the way ordinary page content would. Checked
- * against the reference site directly (2026-09-06): its captions hold a
- * single screen position across a whole scroll passage and only ever
- * *replace themselves*, never translate.
+ * front page: the picture changes under you, and each caption sits in one
+ * screen position and holds there while its picture does, rather than
+ * scrolling past like ordinary page text.
  *
- * Earlier version of this component put the words in normal document flow,
- * pulled up over the sticky image with a negative margin — which meant a
- * step taller than one screen (ours: "What we do", two disciplines) scrolled
- * its own text past the reader exactly like a normal page, illegible at any
- * speed. Fixed by moving the words into the sticky layer itself, as their
- * own cross-fading stack alongside the images: nothing in view ever moves,
- * it only ever swaps. Scroll distance is now just a set of empty, unstyled
- * spacer tracks below — one per step, sized by `dwell` — watched by an
- * IntersectionObserver purely to decide which cross-fade is active.
+ * Second version, 2026-09-07 — the first one hung the tab. It kept every
+ * step's picture AND every step's caption stacked in one absolutely
+ * positioned box for the whole section, all of them toggled by a single
+ * IntersectionObserver watching a 16%-tall band in the middle of the
+ * screen. Two things came from that: a step whose caption was taller than
+ * one screen (three of the four here, once "What we do" ran two
+ * disciplines through the same beat) had nowhere to put the overflow, so
+ * it rode up over the fixed header — and a narrow trigger band is exactly
+ * the kind of thing a fast scroll (a trackpad flick, a dragged scrollbar)
+ * can jump straight over, which left the observer re-arming against a
+ * moving target rather than settling, and the tab with it.
+ *
+ * This version only asks the browser to do the one thing browsers are
+ * already good at: `position: sticky`. The picture stack is still one
+ * sticky, full-bleed layer shared down the whole section, cross-fading on
+ * a plain scroll-position readout (which step's track is nearest the
+ * middle of the screen — recomputed at most once per frame, so a big jump
+ * just lands on the right answer instead of missing a window). But the
+ * caption for each step now lives inside *that step's own track*, pinned
+ * with its own `sticky top-0`, scoped to that track alone by the normal
+ * CSS containing-block rule. It can never sit on top of the header (it
+ * starts sticking from the section's own top, same as the picture), it
+ * can never overlap a neighbour's caption (each is boxed inside its own
+ * track), and if a caption ever does need more than one screen, that
+ * track's `overflow-y-auto` lets it scroll on its own rather than clip —
+ * belt and braces, since no caption here is actually that long any more
+ * (see app/page.tsx: "What we do" is now two beats, one discipline each,
+ * not one beat carrying both).
  */
 export default function StoryScroll({ steps }: { steps: StoryStep[] }) {
   const [active, setActive] = useState(0);
-  const nodes = useRef<(HTMLDivElement | null)[]>([]);
+  const tracks = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (!entry.isIntersecting) continue;
-          const i = nodes.current.indexOf(entry.target as HTMLDivElement);
-          if (i !== -1) setActive(i);
-        }
-      },
-      { threshold: 0, rootMargin: "-42% 0px -42% 0px" },
-    );
+    let frame = 0;
 
-    for (const node of nodes.current) if (node) observer.observe(node);
-    return () => observer.disconnect();
+    const measure = () => {
+      frame = 0;
+      const mid = window.innerHeight / 2;
+      let bestIndex = 0;
+      let bestDist = Infinity;
+
+      tracks.current.forEach((el, i) => {
+        if (!el) return;
+        const r = el.getBoundingClientRect();
+        // 0 while the viewport's mid-line is inside this track; otherwise
+        // the distance to its nearer edge. Whichever track the middle of
+        // the screen is actually sitting in wins, full stop — no band to
+        // miss, no state to re-settle.
+        const dist = mid < r.top ? r.top - mid : mid > r.bottom ? mid - r.bottom : 0;
+        if (dist < bestDist) {
+          bestDist = dist;
+          bestIndex = i;
+        }
+      });
+
+      setActive((prev) => (prev === bestIndex ? prev : bestIndex));
+    };
+
+    const onScroll = () => {
+      if (frame) return;
+      frame = requestAnimationFrame(measure);
+    };
+
+    measure();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      if (frame) cancelAnimationFrame(frame);
+    };
   }, [steps.length]);
 
   return (
     <section className="grain relative">
+      {/* The pictures — one shared sticky layer for the whole section,
+          exactly as before. Only the trigger for *which one* changed. */}
       <div className="sticky top-0 h-[100svh] w-full overflow-hidden">
         {steps.map((step, i) => {
           const img = IMAGES[step.image];
@@ -80,7 +126,9 @@ export default function StoryScroll({ steps }: { steps: StoryStep[] }) {
                 placeholder="blur"
                 blurDataURL={img.blurDataURL}
                 sizes="100vw"
-                className={`object-cover ${step.focus ?? "object-center"}`}
+                className={`object-cover transition-transform duration-[2600ms] ease-out motion-reduce:transition-none ${
+                  step.focus ?? "object-center"
+                } ${i === active ? "scale-100" : "scale-[1.045]"}`}
               />
               <div
                 aria-hidden="true"
@@ -89,40 +137,30 @@ export default function StoryScroll({ steps }: { steps: StoryStep[] }) {
             </div>
           );
         })}
-
-        {/* The words: fixed to the screen, never in document flow, never
-            translating — only ever cross-fading in place, same as the
-            pictures above. */}
-        {steps.map(
-          (step, i) =>
-            step.content && (
-              <div
-                key={`${step.key}-copy`}
-                aria-hidden={i !== active}
-                className={`pointer-events-none absolute inset-0 flex items-end pb-[clamp(3rem,7vw,5.5rem)] pt-[clamp(9rem,16vw,13rem)] transition-opacity duration-[900ms] ease-out ${
-                  i === active ? "opacity-100 delay-[500ms]" : "opacity-0"
-                }`}
-              >
-                <div className={i === active ? "pointer-events-auto w-full" : "w-full"}>
-                  {step.content}
-                </div>
-              </div>
-            ),
-        )}
       </div>
 
-      {/* Unstyled scroll track — one spacer per step, however long that
-          step should hold the screen before the next takes over. No
-          content lives here; it exists only for the observer below. */}
+      {/* One track per step. Each is at least `dwell` tall — that's the
+          scroll distance the picture holds for — and each owns its own
+          sticky caption, so nothing here can ever reach outside its own
+          step. */}
       <div className="relative">
         {steps.map((step, i) => (
           <div
             key={step.key}
             ref={(el) => {
-              nodes.current[i] = el;
+              tracks.current[i] = el;
             }}
-            style={{ height: `${step.dwell ?? 100}svh` }}
-          />
+            style={{ minHeight: `${step.dwell ?? 100}svh` }}
+            className="relative"
+          >
+            {step.content && (
+              <div className="sticky top-0 flex h-[100svh] max-h-[100svh] items-end overflow-y-auto pb-[clamp(2.5rem,6vw,4.5rem)] pt-[clamp(5rem,8vw,7rem)]">
+                <Reveal className="w-full" threshold={0.3}>
+                  {step.content}
+                </Reveal>
+              </div>
+            )}
+          </div>
         ))}
       </div>
     </section>
