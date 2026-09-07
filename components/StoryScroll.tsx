@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import Image from "next/image";
 import { IMAGES } from "@/lib/images";
-import Reveal from "@/components/Reveal";
 
 export type StoryStep = {
   key: string;
@@ -155,9 +154,25 @@ export default function StoryScroll({ steps }: { steps: StoryStep[] }) {
           >
             {step.content && (
               <div className="sticky top-0 flex h-[100svh] max-h-[100svh] items-end overflow-y-auto pb-[clamp(2.5rem,6vw,4.5rem)] pt-[clamp(5rem,8vw,7rem)]">
-                <Reveal className="w-full" threshold={0.3}>
+                {/* Gated by the same `active` index as the picture, but the
+                    outgoing caption's fade-out (300ms, no delay) is timed
+                    to finish before the incoming one's fade-in (420ms)
+                    even starts (delay-[300ms]) — sequential, never both
+                    partway visible at once. GMP Builders' own site is the
+                    cautionary example: its hero paragraphs cross-fade
+                    simultaneously and sit there legible-on-top-of-legible
+                    for the better part of a second, which is exactly the
+                    "can't read the words" complaint this avoids. */}
+                <div
+                  aria-hidden={i !== active}
+                  className={`w-full transition-[opacity,transform] ease-out motion-reduce:transition-none ${
+                    i === active
+                      ? "opacity-100 translate-y-0 duration-[420ms] delay-[300ms]"
+                      : "pointer-events-none opacity-0 translate-y-2 duration-[300ms]"
+                  }`}
+                >
                   {step.content}
-                </Reveal>
+                </div>
               </div>
             )}
           </div>
