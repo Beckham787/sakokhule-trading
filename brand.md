@@ -1,5 +1,36 @@
 # Sakokhule Trading — brand notes
 
+**Fifth edition — Clay Style × Survey Line, the current homepage.**
+Chosen 2026-09-08, after a proper comparison exercise: six fresh directions
+were mocked up against the real record (not this brief's earlier ones),
+two were shortlisted (Survey Line's title-block structure, Site Ledger's
+job-register structure), Survey Line's structure was then run through all
+twenty style treatments in the studio's standard list, and Clay Style —
+soft, rounded, three-dimensional, every surface pressed rather than drawn
+— was picked as the one. Built as `.clay` in `globals.css`, live at
+`app/page.tsx`. Two rules carried over from the brief itself, not the
+exercise: **no fleet or plant photographs** (the logo mark is the only
+image on the page) and **no contract values** (the record states years
+trading, contracts completed and the CIDB grading — never what any job was
+worth). Palette still comes off the logo, same discipline as every edition
+below: the steel ring softened into a dusty clay-blue, the red bars
+softened into terracotta, on a warm putty ground. Type is Fredoka
+(display) and Quicksand (body), self-hosted per `fonts/README.md`,
+scoped to `.clay` only — the earthed inner pages below keep Source
+Serif 4 / Inter untouched.
+
+**Note on everything below this point:** it documents the second and
+third editions faithfully, but the *fourth* edition it describes
+(StoryScroll, one photograph told across the whole homepage) was itself
+superseded by several more homepage explorations that were never written
+up here — `.rig` (industrial hi-vis), `.dream` (surreal dreamscape),
+`.mnml` (minimalist), `.flux` (futuristic HUD) and `.fxm` (futuristic ×
+minimalist, the one actually live before this edition) — all still in
+`globals.css`, all undocumented in this file until now. Treat the code as
+the record of what shipped; treat this file as the record of *why*, which
+lagged behind more than once. Don't assume the homepage still matches
+this file's fourth-edition description — it hasn't for a while.
+
 **Fourth edition — the homepage as one photograph.** Lindokuhle sent four
 more photographs on 2026-09-06, already colour-enhanced on his end, meant
 for the homepage rather than the fleet catalogue. The whole page is now told

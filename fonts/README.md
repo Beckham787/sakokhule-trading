@@ -16,8 +16,10 @@ multi-minute stall — the direct cause of "localhost not loading" on
 | `inter-variable.woff2` | weights 400–700 | Same story — one file, confirmed byte-identical across 400/500/600/700. |
 | `ibm-plex-mono-400.woff2` | weight 400 | Genuinely distinct static file. |
 | `ibm-plex-mono-500.woff2` | weight 500 | Genuinely distinct static file. |
+| `fredoka-variable.woff2` | weights 500–600 | Variable font — one file for both, confirmed byte-identical. Display voice for the Clay Style edition (`.clay`). |
+| `quicksand-variable.woff2` | weights 500–600 | Same story. Body voice for the Clay Style edition (`.clay`). |
 
-Wired up in `app/layout.tsx` via `next/font/local`.
+Wired up in `app/layout.tsx` via `next/font/local`. The Fredoka/Quicksand fetch on 2026-09-08 confirmed the CDN issue above is no longer reproducing — both came back on the first request, fast — but they're committed here anyway, for the same reason the rest are: one less thing that can stall a fresh compile.
 
 If the type needs a new weight or a new family later, fetch it from
 `fonts.google.com` (or the CDN, network permitting) and drop the `.woff2`
