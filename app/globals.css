@@ -68,6 +68,10 @@
   --band: clamp(4.5rem, 9vw, 8.5rem);
 
   /* -- type scale ---------------------------------------------------- */
+  /* `--step-display` is the fourth-edition addition: a commanding hero
+     measure for the rebuilt homepage, where a headline finally carries the
+     opening rather than a wordless picture. Everything below it is unchanged. */
+  --step-display: clamp(2.6rem, 6.2vw, 5.25rem);
   --step-hero: clamp(2.15rem, 4.2vw, 3.7rem);
   --step-title: clamp(1.65rem, 2.8vw, 2.4rem);
   --step-head: clamp(1.25rem, 1.9vw, 1.6rem);
@@ -334,6 +338,46 @@
       );
   }
 
+  /* ----------------------------------------------------- cinematic scrims */
+  /* Fourth-edition rebuild. The old `.hero-scrim` was tuned for the
+     scroll-story, where text sat over every frame, so it crushed the lower
+     two-thirds of the picture to near-black. The rebuilt homepage shows the
+     photograph as a photograph and lets the words sit in the corner it owns,
+     so the scrims are lighter and directional: enough to seat white type,
+     never enough to lose the machine in the dark. */
+
+  /* The hero. A soft top veil holds the header's nav; the picture breathes
+     through the middle; a bottom-left wedge seats the headline and CTAs. */
+  .scrim-cine {
+    background:
+      linear-gradient(
+        to bottom,
+        rgba(20, 17, 14, 0.5) 0%,
+        rgba(20, 17, 14, 0.14) 18%,
+        rgba(20, 17, 14, 0) 42%,
+        rgba(20, 17, 14, 0.55) 82%,
+        rgba(20, 17, 14, 0.9) 100%
+      ),
+      linear-gradient(
+        75deg,
+        rgba(20, 17, 14, 0.6) 0%,
+        rgba(20, 17, 14, 0.12) 48%,
+        rgba(20, 17, 14, 0) 70%
+      );
+  }
+
+  /* A quieter read-veil for photographs a caption or short label sits on,
+     anchored to whichever corner the text takes. */
+  .scrim-read {
+    background: linear-gradient(
+      to top,
+      rgba(20, 17, 14, 0.82) 0%,
+      rgba(20, 17, 14, 0.34) 38%,
+      rgba(20, 17, 14, 0.05) 66%,
+      rgba(20, 17, 14, 0) 100%
+    );
+  }
+
   /* A hairline in the haul-road colour, for the edges that want to be warm
      rather than neutral — section tops on the dark ground. */
   .rule-soil {
@@ -457,4 +501,838 @@
     opacity: 1;
     animation: none;
   }
+}
+
+/* =====================================================================
+   FOURTH EDITION — INDUSTRIAL / HI-VIS
+   A clean break from the warm-serif "letterhead" above, not a reskin of
+   it. Cool near-black ground, a heavy grotesque set huge and uppercase,
+   and machine hi-vis yellow used as a STRUCTURAL colour — solid blocks,
+   thick rules, a moving marquee — the exact opposite of the quiet-hairline
+   system. Scoped under `.rig` so the inner pages' earthed tokens are left
+   completely untouched while this direction is judged.
+   ===================================================================== */
+.rig {
+  --ink: #0b0c0e;         /* cool near-black — not the warm pit */
+  --ink-2: #15171b;       /* raised panel */
+  --paper: #f5f6f5;       /* text / cool off-white */
+  --mist: #9aa1a9;        /* muted */
+  --hi: #ffd400;          /* machine hi-vis yellow — the loud accent */
+  --hazard: #ff5a1f;      /* hazard orange, used once */
+  --line: rgba(245, 246, 245, 0.16);
+  --line-strong: rgba(245, 246, 245, 0.34);
+
+  background: var(--ink);
+  color: var(--paper);
+  overflow-x: hidden;
+}
+
+.rig ::selection {
+  background: var(--hi);
+  color: var(--ink);
+}
+
+.rig ::-webkit-scrollbar { width: 0; }
+
+/* The display voice: Archivo, heavy, uppercase, tight. */
+.grotesk {
+  font-family: var(--font-grotesk), "Arial Narrow", system-ui, sans-serif;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  line-height: 0.88;
+  text-wrap: balance;
+}
+.grotesk-black {
+  font-family: var(--font-grotesk), "Arial Narrow", system-ui, sans-serif;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: -0.03em;
+  line-height: 0.84;
+  text-wrap: balance;
+}
+
+.rig .ink-hi { color: var(--hi); }
+.rig .ink-mist { color: var(--mist); }
+
+/* The loud button — a solid hi-vis slab that inverts to paper on hover. */
+.slab {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  background: var(--hi);
+  color: var(--ink);
+  font-family: var(--font-grotesk), system-ui, sans-serif;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  font-size: 0.9rem;
+  padding: 1.05rem 1.9rem;
+  border: 2px solid var(--hi);
+  transition:
+    transform 0.18s ease,
+    background-color 0.18s ease,
+    border-color 0.18s ease;
+}
+.slab:hover,
+.slab:focus-visible {
+  background: var(--paper);
+  border-color: var(--paper);
+  transform: translateY(-2px);
+}
+
+.slab-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: var(--paper);
+  font-family: var(--font-grotesk), system-ui, sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  font-size: 0.9rem;
+  padding: 1.05rem 1.9rem;
+  border: 2px solid var(--line-strong);
+  transition: border-color 0.18s ease, color 0.18s ease;
+}
+.slab-ghost:hover,
+.slab-ghost:focus-visible {
+  border-color: var(--hi);
+  color: var(--hi);
+}
+
+/* Big hanging index number in hi-vis. */
+.dex {
+  font-family: var(--font-grotesk), system-ui, sans-serif;
+  font-weight: 900;
+  font-size: clamp(2.5rem, 7vw, 5rem);
+  line-height: 0.8;
+  color: var(--hi);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+
+/* Kinetic capability marquee — a solid hi-vis bar, black bold text. */
+.marquee {
+  overflow: hidden;
+  white-space: nowrap;
+  background: var(--hi);
+  color: var(--ink);
+  border-block: 3px solid var(--ink);
+}
+.marquee__track {
+  display: inline-block;
+  animation: marquee 32s linear infinite;
+  will-change: transform;
+}
+.marquee__track > span {
+  font-family: var(--font-grotesk), system-ui, sans-serif;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  font-size: clamp(1.1rem, 2.4vw, 1.9rem);
+  padding-block: 0.7rem;
+}
+@keyframes marquee {
+  to { transform: translateX(-50%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .marquee__track { animation: none; }
+}
+
+/* Hazard stripe — the one overt nod, used a single time. */
+.hazard-edge {
+  background: repeating-linear-gradient(
+    -45deg,
+    var(--hi) 0 16px,
+    var(--ink) 16px 32px
+  );
+}
+
+/* High-contrast, cooled photo grade for the industrial register. */
+.grade {
+  filter: grayscale(0.3) contrast(1.08) brightness(0.9);
+}
+
+/* Thick rule, the structural opposite of the hairline. */
+.rig .rule-thick {
+  border-color: var(--line-strong);
+}
+
+/* =====================================================================
+   FOURTH EDITION (ALT) — SURREAL / DREAMSCAPE
+   A dawn-to-night dreamscape: gradient skies, machines floating inside
+   orbs and portals, a luminous sun, oversized elegant serif, soft shadows
+   and gentle drift. Nothing hard-edged. The earth-moving work reframed as
+   something monumental and a little unreal. Scoped under `.dream`.
+   ===================================================================== */
+.dream {
+  /* Palette drawn straight off the logo: steel-blue ring + arrow, the red
+     bars, the charcoal bars. The dreamscape descends from a pale steel sky
+     to a deep teal-navy night, with the logo red as the sun. */
+  --steel: #2e6a85;       /* the logo ring */
+  --steel-deep: #163a4c;
+  --night: #0a1d27;
+  --sun: #d8341e;         /* the logo red */
+  --sun-hot: #ff6a3d;     /* a lit tint of it, for accents on any ground */
+  --cream: #f2efe9;
+  --ink: #2a2a2e;         /* the logo charcoal */
+  --ink-soft: #566068;
+
+  color: var(--ink);
+  overflow-x: hidden;
+  background: #0a1d27;
+}
+
+.dream ::selection {
+  background: var(--sun);
+  color: var(--cream);
+}
+
+/* pale-steel sky → deep teal-navy night */
+.g-dawn { background: linear-gradient(165deg, #dfeaed 0%, #bcd4dd 45%, #8fb6c6 100%); }
+.g-lav { background: linear-gradient(180deg, #cfe1e6 0%, #a9c9d5 55%, #83aebf 100%); }
+.g-twilight { background: linear-gradient(180deg, #4c7d92 0%, #2b6079 55%, #1f4d61 100%); }
+.g-night { background: linear-gradient(180deg, #17414f 0%, #0e2733 60%, #0a1d27 100%); }
+
+.dream-serif {
+  font-family: var(--font-display), Georgia, serif;
+  font-weight: 420;
+  font-variation-settings: "wght" 460;
+  letter-spacing: -0.02em;
+  line-height: 0.98;
+  text-wrap: balance;
+}
+.dream-serif-i {
+  font-family: var(--font-display), Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+.dream .ink-sun { color: var(--sun-hot); }
+.dream .ink-cream { color: var(--cream); }
+.dream .ink-soft { color: var(--ink-soft); }
+.dream .cream-soft { color: rgba(242, 239, 233, 0.74); }
+
+/* the luminous sun — the logo red, lit from within */
+.sun-orb {
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 42%, #ffe2ce 0%, #ff8a5c 36%, var(--sun) 64%, rgba(216, 52, 30, 0) 74%);
+  filter: blur(0.5px);
+}
+
+/* a photograph masked into a floating portal */
+.orb {
+  position: relative;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow:
+    0 40px 80px -30px rgba(23, 18, 50, 0.65),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.18);
+}
+
+/* a soft luminous pill button */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  border-radius: 999px;
+  padding: 1rem 1.9rem;
+  font-family: var(--font-body), system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 0.95rem;
+  letter-spacing: 0.01em;
+  background: linear-gradient(180deg, var(--sun-hot), var(--sun));
+  color: var(--cream);
+  box-shadow: 0 14px 30px -12px rgba(216, 52, 30, 0.7);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.pill:hover,
+.pill:focus-visible {
+  transform: translateY(-3px);
+  box-shadow: 0 20px 40px -12px rgba(216, 52, 30, 0.9);
+}
+
+.pill-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 999px;
+  padding: 1rem 1.8rem;
+  font-family: var(--font-body), system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 0.95rem;
+  border: 1.5px solid currentColor;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  opacity: 0.85;
+}
+.pill-ghost:hover,
+.pill-ghost:focus-visible {
+  opacity: 1;
+  transform: translateY(-3px);
+}
+
+/* gentle drift */
+@keyframes drift {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
+}
+@keyframes drift-tilt {
+  0%, 100% { transform: translateY(0) rotate(var(--tilt, 0deg)); }
+  50% { transform: translateY(-26px) rotate(var(--tilt, 0deg)); }
+}
+.float { animation: drift 9s ease-in-out infinite; }
+.float-slow { animation: drift 13s ease-in-out infinite; }
+.float-tilt { animation: drift-tilt 11s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) {
+  .float, .float-slow, .float-tilt { animation: none; }
+}
+
+.dream .grain-soft::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.06;
+  mix-blend-mode: soft-light;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* =====================================================================
+   FOURTH EDITION (ALT) — MINIMALIST
+   Near-white, enormous space, one restrained accent. The palette is still
+   the logo's — charcoal ink, the red as the single accent, steel as a
+   whisper — but almost nothing is coloured. Precision in type and spacing
+   does the work. Scoped under `.mnml`.
+   ===================================================================== */
+.mnml {
+  --paper: #faf9f7;
+  --paper-2: #f1efe9;
+  --ink: #23231f;         /* the logo charcoal */
+  --ink-2: #55554f;
+  --mute: #8f8e87;
+  --line: rgba(35, 35, 31, 0.13);
+  --accent: #d82e0b;      /* the logo red — the single accent */
+  --steel: #275e7c;       /* a whisper, for the odd secondary mark */
+
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body), system-ui, sans-serif;
+}
+
+.mnml ::selection {
+  background: var(--accent);
+  color: #fff;
+}
+
+.m-display {
+  font-family: var(--font-body), system-ui, sans-serif;
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  line-height: 1.03;
+  text-wrap: balance;
+}
+.m-display-light {
+  font-family: var(--font-body), system-ui, sans-serif;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+  text-wrap: balance;
+}
+
+.m-label {
+  font-family: var(--font-body), system-ui, sans-serif;
+  font-size: 0.72rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--mute);
+}
+
+.mnml .accent { color: var(--accent); }
+.mnml .steel { color: var(--steel); }
+.mnml .mute { color: var(--mute); }
+
+/* Understated text link — a rule that shifts to the accent on hover. */
+.m-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.95rem;
+  color: var(--ink);
+  border-bottom: 1px solid var(--ink);
+  padding-bottom: 2px;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+.m-link:hover,
+.m-link:focus-visible {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+/* The one button — a hairline outline that fills with ink on hover. */
+.m-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  border: 1px solid var(--ink);
+  padding: 0.9rem 1.7rem;
+  font-size: 0.9rem;
+  letter-spacing: 0.01em;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+.m-btn:hover,
+.m-btn:focus-visible {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+/* Extra-generous vertical rhythm — space is the material here. */
+.m-band { padding-block: clamp(5rem, 12vw, 11rem); }
+
+.mnml .line-t { border-top: 1px solid var(--line); }
+.m-accent-rule { height: 2px; width: 42px; background: var(--accent); }
+
+/* =====================================================================
+   FOURTH EDITION (ALT) — FUTURISTIC / HUD
+   Deep-space charcoal, a faint tech grid, glowing edges, monospace
+   readouts and glassy panels. The logo palette pushed into neon: the
+   steel-blue lifted to a glowing cyan, the red kept as a hot signal.
+   Scoped under `.flux`.
+   ===================================================================== */
+.flux {
+  --void: #070a0f;
+  --panel: #0d131b;
+  --cyan: #46b4dc;        /* the logo steel, lifted to neon */
+  --cyan-hi: #8adcf6;
+  --red: #ff4a2e;         /* the logo red, as a hot signal */
+  --fog: #e6edf2;
+  --dim: #7f8c99;
+  --line: rgba(70, 180, 220, 0.16);
+  --line-2: rgba(70, 180, 220, 0.32);
+
+  background: var(--void);
+  color: var(--fog);
+  overflow-x: hidden;
+}
+.flux ::selection { background: var(--cyan); color: var(--void); }
+
+.flux-grid {
+  background-image:
+    linear-gradient(var(--line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size: 64px 64px;
+}
+
+.flux-mono { font-family: var(--font-mono), ui-monospace, monospace; }
+.flux-display {
+  font-family: var(--font-grotesk), system-ui, sans-serif;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  line-height: 0.9;
+  text-wrap: balance;
+}
+.flux-label {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+
+.flux .cyan { color: var(--cyan); }
+.flux .red { color: var(--red); }
+.flux .dim { color: var(--dim); }
+.flux .fog { color: var(--fog); }
+
+.glow-cyan { text-shadow: 0 0 22px rgba(70, 180, 220, 0.6); }
+.glow-red { text-shadow: 0 0 22px rgba(255, 74, 46, 0.55); }
+
+.orb-glow { border-radius: 50%; filter: blur(46px); opacity: 0.5; pointer-events: none; }
+
+.glass {
+  background: linear-gradient(160deg, rgba(70, 180, 220, 0.08), rgba(13, 19, 27, 0.5));
+  border: 1px solid var(--line-2);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+}
+
+.btn-flux {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-mono), monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 0.8rem;
+  color: var(--void);
+  background: var(--cyan);
+  padding: 1rem 1.8rem;
+  border: 1px solid var(--cyan);
+  box-shadow: 0 0 26px rgba(70, 180, 220, 0.5);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.btn-flux:hover, .btn-flux:focus-visible {
+  transform: translateY(-2px);
+  box-shadow: 0 0 40px rgba(70, 180, 220, 0.85);
+}
+.btn-flux-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-mono), monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 0.8rem;
+  color: var(--cyan);
+  border: 1px solid var(--line-2);
+  padding: 1rem 1.8rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.btn-flux-ghost:hover, .btn-flux-ghost:focus-visible {
+  border-color: var(--cyan);
+  box-shadow: 0 0 24px rgba(70, 180, 220, 0.35);
+}
+
+/* HUD corner brackets on a framed element */
+.hud { position: relative; }
+.hud::before, .hud::after {
+  content: "";
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border: 1.5px solid var(--cyan);
+  pointer-events: none;
+}
+.hud::before { top: -1px; left: -1px; border-right: 0; border-bottom: 0; }
+.hud::after { bottom: -1px; right: -1px; border-left: 0; border-top: 0; }
+
+/* cool tech grade on photographs */
+.grade-flux { filter: grayscale(0.35) contrast(1.12) brightness(0.82) saturate(1.15); }
+
+/* thin data ticker, reusing the marquee keyframe */
+.ticker { overflow: hidden; white-space: nowrap; border-block: 1px solid var(--line); background: var(--panel); }
+.ticker__track {
+  display: inline-block;
+  animation: marquee 44s linear infinite;
+}
+.ticker__track > span {
+  font-family: var(--font-mono), monospace;
+  font-size: 0.8rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding-block: 0.65rem;
+  color: var(--dim);
+}
+@media (prefers-reduced-motion: reduce) { .ticker__track { animation: none; } }
+
+/* =====================================================================
+   FOURTH EDITION (ALT) — FUTURISTIC × MINIMALIST
+   The tech language stripped to almost nothing: deep-space ground, huge
+   negative space, monospace micro-labels, thin glowing rules, and a single
+   cyan glow (the logo steel) as the only accent. No photographs — type and
+   space do all the work. Scoped under `.fxm`.
+   ===================================================================== */
+.fxm {
+  --void: #0a0b0e;
+  --panel: #101217;
+  --fog: #e9edf0;
+  --dim: #6e7681;
+  --cyan: #58bee0;        /* the logo steel, one luminous accent */
+  --red: #ff5a3d;         /* the logo red, held in reserve */
+  --line: rgba(233, 237, 240, 0.09);
+  --line-cyan: rgba(88, 190, 224, 0.4);
+
+  background: var(--void);
+  color: var(--fog);
+  font-family: var(--font-body), system-ui, sans-serif;
+  overflow-x: hidden;
+}
+.fxm ::selection { background: var(--cyan); color: var(--void); }
+
+.fxm-display {
+  font-family: var(--font-body), system-ui, sans-serif;
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  line-height: 1.02;
+  text-wrap: balance;
+}
+.fxm-label {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+.fxm-mono { font-family: var(--font-mono), ui-monospace, monospace; }
+.fxm .cyan { color: var(--cyan); }
+.fxm .dim { color: var(--dim); }
+.fxm .red { color: var(--red); }
+.fxm-glow { color: var(--cyan); text-shadow: 0 0 26px rgba(88, 190, 224, 0.5); }
+
+.fxm-rule { height: 1px; background: linear-gradient(90deg, var(--line-cyan), transparent); }
+.fxm .hair-t { border-top: 1px solid var(--line); }
+
+.fxm-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-mono), monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.78rem;
+  color: var(--cyan);
+  border: 1px solid var(--line-cyan);
+  padding: 0.95rem 1.8rem;
+  transition: box-shadow 0.25s ease, background-color 0.25s ease, color 0.25s ease;
+}
+.fxm-btn:hover, .fxm-btn:focus-visible {
+  box-shadow: 0 0 30px rgba(88, 190, 224, 0.45);
+  background: var(--cyan);
+  color: var(--void);
+}
+.fxm-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-mono), monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 0.78rem;
+  color: var(--dim);
+  transition: color 0.2s ease;
+}
+.fxm-link:hover, .fxm-link:focus-visible { color: var(--cyan); }
+
+.fxm-band { padding-block: clamp(5.5rem, 13vw, 12rem); }
+
+.fxm-grid-faint {
+  background-image:
+    linear-gradient(rgba(233, 237, 240, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(233, 237, 240, 0.04) 1px, transparent 1px);
+  background-size: 82px 82px;
+}
+.fxm-orb {
+  border-radius: 50%;
+  filter: blur(64px);
+  opacity: 0.2;
+  pointer-events: none;
+  background: #58bee0;
+}
+
+/* =====================================================================
+   FIFTH EDITION — CLAY STYLE × SURVEY LINE
+   The homepage direction, chosen 2026-09-08 after a twenty-direction
+   comparison exercise (see the studio vault note for the full set). Clay
+   Style's soft, moulded, three-dimensional register applied to the Survey
+   Line concept: the page reads as a title block pressed from putty, not
+   drawn in ink or lit on a HUD. No hard edges anywhere — every corner is
+   rounded and every raised surface carries a light-source-consistent
+   double shadow (dark below-right, light above-left) rather than a flat
+   drop shadow, as if the whole page were pressed from one block of clay.
+
+   Palette still comes off the logo, same discipline as every edition
+   above it: the steel ring softened into a dusty clay-blue, the red bars
+   softened into terracotta, both set on a warm putty ground. No fleet or
+   plant photographs — the mark is the only image on the page; type,
+   space and the moulded surfaces carry the rest. No contract values
+   either, by request — the record shows years trading, contracts
+   completed and the CIDB grading instead of what any of it was worth.
+   Scoped under `.clay`.
+   ===================================================================== */
+.clay {
+  --putty: #f3ece0;
+  --putty-raise: #eae0ce;
+  --clay-ink: #3b322a;
+  --clay-ink-soft: #6e6151;
+  --clay-ink-mute: #8c8072;
+  --clay-blue: #7a9ca8; /* the logo steel, softened to clay */
+  --clay-terracotta: #c97a5c; /* the logo red, softened to clay */
+  --clay-hair: rgba(59, 50, 42, 0.14);
+  --clay-hair-strong: rgba(59, 50, 42, 0.26);
+
+  --bg: var(--putty);
+  --fg: var(--clay-ink);
+  --fg-soft: var(--clay-ink-soft);
+  --fg-mute: var(--clay-ink-mute);
+  --hair: var(--clay-hair);
+  --hair-strong: var(--clay-hair-strong);
+  --accent: var(--clay-blue);
+
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-clay-body), system-ui, sans-serif;
+  overflow-x: hidden;
+}
+
+.clay ::selection {
+  background: var(--clay-terracotta);
+  color: var(--putty);
+}
+
+.clay-display {
+  font-family: var(--font-clay-display), system-ui, sans-serif;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.08;
+  text-wrap: balance;
+}
+
+/* The puffy surface — every raised clay panel gets this: a soft dark
+   shadow below-right, a soft light highlight above-left, as though it
+   were pressed up out of the ground rather than laid on top of it. */
+.clay-surface {
+  background: var(--putty-raise);
+  border-radius: 28px;
+  box-shadow:
+    8px 8px 18px var(--clay-hair-strong),
+    -6px -6px 14px rgba(255, 255, 255, 0.65);
+}
+
+/* The pressed variant — for the title block, which reads as stamped INTO
+   the surface rather than sitting on it. */
+.clay-surface-in {
+  border-radius: 20px;
+  box-shadow:
+    inset 4px 4px 10px var(--clay-hair-strong),
+    inset -3px -3px 8px rgba(255, 255, 255, 0.6);
+}
+
+.clay-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  border-radius: 999px;
+  padding: 0.95rem 1.8rem;
+  font-family: var(--font-clay-body), system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--putty);
+  background: var(--clay-terracotta);
+  box-shadow:
+    5px 5px 14px var(--clay-hair-strong),
+    -3px -3px 10px rgba(255, 255, 255, 0.5);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.clay-btn:hover,
+.clay-btn:focus-visible {
+  transform: translateY(-2px);
+  box-shadow:
+    7px 9px 18px var(--clay-hair-strong),
+    -3px -3px 10px rgba(255, 255, 255, 0.5);
+}
+
+.clay-btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 999px;
+  padding: 0.95rem 1.8rem;
+  font-family: var(--font-clay-body), system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--clay-ink);
+  background: var(--putty);
+  box-shadow:
+    5px 5px 12px var(--clay-hair-strong),
+    -3px -3px 10px rgba(255, 255, 255, 0.6);
+  transition: transform 0.2s ease;
+}
+.clay-btn-ghost:hover,
+.clay-btn-ghost:focus-visible {
+  transform: translateY(-2px);
+}
+
+.clay .blue {
+  color: var(--clay-blue);
+}
+.clay .terracotta {
+  color: var(--clay-terracotta);
+}
+
+.clay-band {
+  padding-block: clamp(4.5rem, 10vw, 9rem);
+}
+
+/* The title block — Survey Line's signature device, re-drawn soft: a
+   stamped strip of DWG metadata instead of a hard-ruled table. */
+.clay-titleblock {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.1rem 1.5rem;
+}
+
+/* A puffy round bead, standing in for the title block's corner rivet. */
+.clay-bead {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--clay-blue);
+  box-shadow:
+    2px 2px 4px var(--clay-hair-strong),
+    -1px -1px 3px rgba(255, 255, 255, 0.7);
+}
+
+/* The hero mark's motion — a mechanical tick, not a spin or a drift. A
+   gear tooth engaging: rotate quickly to the stop, hold under load, snap
+   back, idle, repeat. Deliberately stepped rather than eased like a
+   pendulum, so it reads as machinery indexing rather than something
+   swaying. The only continuous loop in this edition, on purpose. */
+@keyframes mech-tick {
+  0%, 36% { transform: rotate(0deg); }
+  8% { transform: rotate(9deg); }
+  50%, 86% { transform: rotate(9deg); }
+  58% { transform: rotate(0deg); }
+  100% { transform: rotate(0deg); }
+}
+.clay-mark-anim {
+  transform-origin: 50% 55%;
+  animation: mech-tick 3.6s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+  filter: drop-shadow(6px 8px 14px var(--clay-hair-strong));
+}
+@media (prefers-reduced-motion: reduce) {
+  .clay-mark-anim { animation: none; }
+}
+
+/* Header/footer nav rows — a menu row, not a button, so it gets its own
+   hover/active treatment rather than borrowing the pill buttons. */
+.clay-nav-link {
+  display: block;
+  border-radius: 16px;
+  padding: 0.85rem 1.1rem;
+  font-family: var(--font-clay-display), system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 1.05rem;
+  color: var(--clay-ink);
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+.clay-nav-link:hover,
+.clay-nav-link:focus-visible {
+  background: rgba(59, 50, 42, 0.06);
+}
+.clay-nav-link[aria-current="page"] {
+  color: var(--clay-terracotta);
+  background: rgba(201, 122, 92, 0.12);
+}
+
+/* A quiet inline link for the footer's columns — underline draws in,
+   same device as the rest of the site, recoloured for the clay ground. */
+.clay-link {
+  color: var(--clay-ink-soft);
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 0% 1px;
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  transition: background-size 0.3s cubic-bezier(0.16, 1, 0.3, 1), color 0.2s ease;
+  padding-bottom: 2px;
+}
+.clay-link:hover,
+.clay-link:focus-visible {
+  color: var(--clay-ink);
+  background-size: 100% 1px;
 }

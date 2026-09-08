@@ -1,9 +1,9 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
-import Wordmark from "@/components/Wordmark";
 import { company } from "@/lib/content";
 
 const NAV = [
@@ -14,9 +14,13 @@ const NAV = [
 ];
 
 /**
- * The header does almost nothing, on purpose. It sits transparent over the
- * hero until you leave the top of the page, then the pit ground and a
- * hairline arrive under it. No blur, no shadow, no colour block.
+ * Redesigned alongside the Clay Style homepage, 2026-09-08. One toggle and
+ * one dropdown panel at every width — the old split (inline links on
+ * desktop, a full-screen take-over on mobile) is gone. Always `.clay`
+ * regardless of which page it's sitting over, so the header reads as one
+ * thing sitewide even on the inner pages that haven't moved to Clay Style
+ * yet: it floats transparent over the top of the page, then becomes a
+ * puffy clay bar once you scroll, or once the menu opens.
  */
 export default function SiteHeader() {
   const [open, setOpen] = useState(false);
@@ -56,95 +60,78 @@ export default function SiteHeader() {
     href === "/company" ? pathname === "/company" : pathname.startsWith(href);
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50">
-      <div
-        className={`relative z-50 transition-colors duration-500 ${
-          lifted || open ? "border-b border-hair bg-pit" : "border-b border-transparent"
-        }`}
-      >
-        <div className="shell-wide flex items-center justify-between gap-8 py-4">
+    <header className="clay fixed inset-x-0 top-0 z-50">
+      <div className="shell-wide pt-3">
+        <div
+          className={`flex items-center justify-between gap-8 px-5 py-3 transition-all duration-400 ${
+            lifted || open ? "clay-surface" : ""
+          }`}
+        >
           <Link
             href="/"
             onClick={close}
-            className="tap text-fg"
+            className="tap flex items-center gap-3"
             aria-label={`${company.businessName} — home`}
           >
-            <Wordmark size={34} onNight />
+            <Image src="/images/brand/mark.png" alt="" width={34} height={34} priority />
+            <span className="flex flex-col">
+              <span className="clay-display text-[1rem] leading-none">{company.businessName}</span>
+              <span className="label mt-1.5 leading-none text-fg-mute">{company.tagline}</span>
+            </span>
           </Link>
 
-          <nav aria-label="Primary" className="hidden items-center gap-10 lg:flex">
-            {NAV.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                aria-current={active(item.href) ? "page" : undefined}
-                className={`tap text-[0.9375rem] transition-colors duration-300 ${
-                  active(item.href)
-                    ? "text-fg underline decoration-hair-strong underline-offset-[7px]"
-                    : "rule-link text-fg-soft hover:text-fg"
-                }`}
-              >
-                {item.label}
-              </Link>
-            ))}
+          <div className="flex items-center gap-3">
             <a
               href={company.whatsapp}
               target="_blank"
               rel="noopener noreferrer"
-              className="btn label"
+              className="clay-btn hidden sm:inline-flex"
             >
               WhatsApp
             </a>
-          </nav>
-
-          <button
-            ref={toggleRef}
-            type="button"
-            onClick={() => setOpen((v) => !v)}
-            aria-expanded={open}
-            aria-controls="site-menu"
-            className="label tap text-fg lg:hidden"
-          >
-            {open ? "Close" : "Menu"}
-          </button>
-        </div>
-      </div>
-
-      {open && (
-        <div
-          id="site-menu"
-          className="grain fixed inset-0 z-40 flex flex-col justify-between bg-pit pt-24 lg:hidden"
-        >
-          <nav aria-label="Primary" className="shell flex flex-col">
-            {NAV.map((item, i) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                onClick={close}
-                style={{ "--d": `${i * 55}ms` } as React.CSSProperties}
-                className={`menu-line font-display border-b border-hair py-6 text-[clamp(1.75rem,7vw,2.5rem)] ${
-                  active(item.href) ? "text-fg-mute" : "text-fg"
-                }`}
-              >
-                {item.label}
-              </Link>
-            ))}
-          </nav>
-
-          <div className="shell pb-12">
-            <a
-              href={company.whatsapp}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={close}
-              className="btn label w-full justify-center"
+            <button
+              ref={toggleRef}
+              type="button"
+              onClick={() => setOpen((v) => !v)}
+              aria-expanded={open}
+              aria-controls="site-menu"
+              className="clay-btn-ghost"
             >
-              WhatsApp {company.whatsappNumber}
-            </a>
-            <p className="value mt-6 text-fg-mute">{company.address}</p>
+              {open ? "Close" : "Menu"}
+            </button>
           </div>
         </div>
-      )}
+
+        {/* The dropdown — one panel, every width, puffy and pressed just
+            like everything else on Clay Style. */}
+        {open && (
+          <div id="site-menu" className="mt-3 pb-4">
+            <nav aria-label="Primary" className="clay-surface flex flex-col p-3 sm:flex-row sm:flex-wrap sm:items-center sm:gap-1">
+              {NAV.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  onClick={close}
+                  aria-current={active(item.href) ? "page" : undefined}
+                  className="clay-nav-link"
+                >
+                  {item.label}
+                </Link>
+              ))}
+              <a
+                href={company.whatsapp}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={close}
+                className="clay-btn mt-2 justify-center sm:ml-auto sm:mt-0"
+              >
+                WhatsApp {company.whatsappNumber} →
+              </a>
+            </nav>
+            <p className="value mt-4 px-2 text-fg-mute">{company.address}</p>
+          </div>
+        )}
+      </div>
     </header>
   );
 }

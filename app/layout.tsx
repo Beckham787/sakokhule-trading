@@ -21,6 +21,17 @@ const sourceSerif = localFont({
   variable: "--font-display",
 });
 
+/* Fourth-edition rebuild — the industrial voice. Archivo carried the very
+   first edition and was retired for being "signage"; that is now the point.
+   A heavy grotesque (weights to 900), set huge and uppercase, is the display
+   voice of a company that moves earth, not a letterhead. Restored from git. */
+const archivo = localFont({
+  src: "../fonts/archivo-variable.woff2",
+  weight: "100 900",
+  display: "swap",
+  variable: "--font-grotesk",
+});
+
 const inter = localFont({
   src: "../fonts/inter-variable.woff2",
   weight: "400 700",
@@ -35,6 +46,25 @@ const plexMono = localFont({
   ],
   display: "swap",
   variable: "--font-mono",
+});
+
+/* Clay Style edition (`.clay`, homepage only) — its own display/body pair,
+   kept separate from --font-display/--font-body so the earthed inner pages
+   (/company, /contact, /fleet) are untouched. Fredoka carries the rounded,
+   puffy display voice; Quicksand is the soft-edged body face that goes with
+   it. Both variable fonts, one file covers the weights used. */
+const fredoka = localFont({
+  src: "../fonts/fredoka-variable.woff2",
+  weight: "500 600",
+  display: "swap",
+  variable: "--font-clay-display",
+});
+
+const quicksand = localFont({
+  src: "../fonts/quicksand-variable.woff2",
+  weight: "500 600",
+  display: "swap",
+  variable: "--font-clay-body",
 });
 
 export const metadata: Metadata = {
@@ -85,7 +115,7 @@ export default function RootLayout({
   return (
     <html
       lang="en-ZA"
-      className={`${sourceSerif.variable} ${inter.variable} ${plexMono.variable}`}
+      className={`${sourceSerif.variable} ${archivo.variable} ${inter.variable} ${plexMono.variable} ${fredoka.variable} ${quicksand.variable}`}
     >
       <body>
         <script

@@ -1,17 +1,19 @@
 /**
- * Small permanent credit in the footer. Reuses the compass mark from
- * MeetingPoint's own nav; currentColor so it follows the footer's hover
+ * Small permanent credit in the footer. Reuses the compass mark from TK
+ * Studio's own nav; currentColor so it follows the footer's hover
  * treatment. Same component as Izanolihle Roads and the rest of the
- * portfolio.
+ * portfolio — update that copy separately, this repo only covers
+ * Sakokhule Trading. Domain corrected 2026-09-08: TK Studio's own site
+ * moved off meetingpointstudio.co.za to tkstudio.co.za.
  */
 export default function StudioMark() {
   return (
     <a
-      href="https://meetingpointstudio.co.za"
+      href="https://tkstudio.co.za"
       target="_blank"
       rel="noopener noreferrer"
-      aria-label="Site by MeetingPoint Studio — see more of their work"
-      className="inline-flex items-center text-steel opacity-40 transition-opacity duration-300 hover:text-blue hover:opacity-90"
+      aria-label="Site by TK Studio — see more of their work"
+      className="inline-flex items-center text-[var(--clay-blue)] opacity-40 transition-opacity duration-300 hover:text-[var(--clay-terracotta)] hover:opacity-90"
     >
       <svg width="13" height="13" viewBox="0 0 64 64" fill="none" aria-hidden="true">
         <circle cx="32" cy="9" r="3.4" fill="currentColor" />
