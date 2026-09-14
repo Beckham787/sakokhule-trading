@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 
 export default function ProjectsPage() {
   return (
-    <>
+    <div className="clay">
       <PageHeader
         eyebrow="Projects"
         title="Contracts completed since 2016."
@@ -51,6 +51,6 @@ export default function ProjectsPage() {
           <ClientList className="mt-[clamp(2.5rem,5vw,3.5rem)]" />
         </div>
       </section>
-    </>
+    </div>
   );
 }

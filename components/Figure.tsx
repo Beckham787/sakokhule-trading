@@ -34,7 +34,7 @@ export default function Figure({
 
   return (
     <figure className={className}>
-      <div className={`relative w-full overflow-hidden bg-pit-lift ${ratio}`}>
+      <div className={`relative w-full overflow-hidden bg-[var(--putty-raise)] ${ratio}`}>
         <Image
           src={img.src}
           alt={alt}

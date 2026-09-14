@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 
 export default function FleetPage() {
   return (
-    <>
+    <div className="clay">
       <PageHeader
         eyebrow="Fleet & hire"
         title="The machines, and what they are for."
@@ -41,7 +41,7 @@ export default function FleetPage() {
                   <p className="index lg:col-span-1">{String(i + 1).padStart(2, "0")}</p>
 
                   <div className="lg:col-span-5">
-                    <div className="relative aspect-[4/3] overflow-hidden bg-pit-lift">
+                    <div className="relative aspect-[4/3] overflow-hidden bg-[var(--putty-raise)]">
                       <Image
                         src={img.src}
                         alt={m.alt}
@@ -110,6 +110,6 @@ export default function FleetPage() {
           </Reveal>
         </div>
       </section>
-    </>
+    </div>
   );
 }

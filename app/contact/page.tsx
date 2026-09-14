@@ -14,7 +14,7 @@ const tel = (n: string) => `tel:+27${n.replace(/\s/g, "").slice(1)}`;
 
 export default function ContactPage() {
   return (
-    <>
+    <div className="clay">
       <PageHeader
         eyebrow="Contact"
         title="Talk to the office."
@@ -106,6 +106,6 @@ export default function ContactPage() {
           </Reveal>
         </div>
       </section>
-    </>
+    </div>
   );
 }

@@ -1148,9 +1148,15 @@
   --putty-raise: #eae0ce;
   --clay-ink: #3b322a;
   --clay-ink-soft: #6e6151;
-  --clay-ink-mute: #8c8072;
-  --clay-blue: #7a9ca8; /* the logo steel, softened to clay */
-  --clay-terracotta: #c97a5c; /* the logo red, softened to clay */
+  /* Measured against the putty ground, not eyeballed. The softened logo
+     colours were pretty and unreadable: mute 3.28:1, terracotta 2.79:1 and
+     blue 2.50:1 — the last two failing even the 3:1 large-text bar, while
+     mute carries every small uppercase label on the site. Darkened along
+     the same hue until each clears 4.5:1. The button gains too: white on
+     terracotta goes 3.4:1 -> 5.31:1. */
+  --clay-ink-mute: #746a5f;                 /* 4.51:1 on putty */
+  --clay-blue: #51707c;    /* the logo steel, softened to clay — 4.52:1 */
+  --clay-terracotta: #a55537; /* the logo red, softened to clay — 4.52:1 */
   --clay-hair: rgba(59, 50, 42, 0.14);
   --clay-hair-strong: rgba(59, 50, 42, 0.26);
 
@@ -1171,6 +1177,35 @@
 .clay ::selection {
   background: var(--clay-terracotta);
   color: var(--putty);
+}
+
+/* Carrying clay to the inner pages.
+   `.clay` already remaps --bg/--fg/--hair/--accent and the body face, so
+   wrapping a page in it converts the palette wholesale. Headings were the
+   gap: they resolve to var(--font-display) — Source Serif 4, from the
+   earthed editorial edition — which reads as a different website sitting
+   inside a clay shell. These pull them onto the clay display face so a
+   wrapped page is genuinely one design, not a reskinned one. */
+/* `.font-display` is a utility that hard-sets Source Serif, and it is used
+   on body-level things too — the contact page's phone link and postal
+   address, LinkRows' headings. Inside clay it has to resolve to the clay
+   face or those lines stay visibly on the old edition's typeface. */
+.clay .font-display,
+.clay h1,
+.clay h2,
+.clay h3 {
+  font-family: var(--font-clay-display), system-ui, sans-serif;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.08;
+  text-wrap: balance;
+}
+
+/* The chainage rule was drawn for a dark ground; on putty it needs the
+   clay hairline, not the bone one. */
+.clay .chainage,
+.clay .draw {
+  border-color: var(--clay-hair-strong);
 }
 
 .clay-display {
@@ -1254,7 +1289,10 @@
 }
 
 .clay-band {
-  padding-block: clamp(4.5rem, 10vw, 9rem);
+  /* Was clamp(4.5rem, 10vw, 9rem) — 142px top AND bottom at a 1440 viewport,
+     which left the bands measuring 28-45% empty and pushed the page to
+     5,529px for a modest amount of content. Clay wants air, not a vacuum. */
+  padding-block: clamp(3.5rem, 6.2vw, 6.5rem);
 }
 
 /* The title block — Survey Line's signature device, re-drawn soft: a

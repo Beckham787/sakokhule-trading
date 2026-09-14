@@ -37,42 +37,45 @@ export default function HomePage() {
     <div className="clay">
       {/* ============================================================ hero */}
       <section className="clay-band relative overflow-hidden">
-        <div className="shell relative pt-28">
-          <Reveal className="flex items-center gap-3">
-            <Image
-              src="/images/brand/mark.png"
-              alt="Sakokhule Trading mark"
-              width={40}
-              height={40}
-              priority
-            />
-            <span className="label text-fg-mute">
-              {company.tagline} · Malelane, Mpumalanga
-            </span>
-          </Reveal>
+        <div className="shell relative pt-20">
+          {/* The mark used to appear twice inside one viewport — 40px beside
+              the tagline, then 104px again between the headline and the
+              buttons, which cut the read from claim to action in half. It is
+              the only image on this page by the brief, so it should be one
+              thing, once, and big enough to carry that. */}
+          <div className="grid items-center gap-x-14 gap-y-12 lg:grid-cols-[minmax(0,1fr)_auto]">
+            <div>
+              <Reveal>
+                <span className="label text-fg-mute">
+                  {company.tagline} · Malelane, Mpumalanga
+                </span>
+              </Reveal>
 
-          <Reveal delay={80} as="h1" className="clay-display mt-10 max-w-[15ch] text-[clamp(2.6rem,6.2vw,5rem)]">
-            We move earth, and shape what&rsquo;s <span className="terracotta">left behind.</span>
-          </Reveal>
+              <Reveal delay={80} as="h1" className="clay-display mt-8 max-w-[15ch] text-[clamp(2.6rem,6.2vw,5rem)]">
+                We move earth, and shape what&rsquo;s <span className="terracotta">left behind.</span>
+              </Reveal>
 
-          <Reveal delay={160} className="mt-9">
-            <Image
-              src="/images/brand/mark.png"
-              alt="Sakokhule Trading mark"
-              width={104}
-              height={104}
-              className="clay-mark-anim"
-            />
-          </Reveal>
+              <Reveal delay={220} className="mt-10 flex flex-wrap items-center gap-5">
+                <a href={company.whatsapp} target="_blank" rel="noopener noreferrer" className="clay-btn">
+                  Get a quote →
+                </a>
+                <Link href="/company/projects" className="clay-btn-ghost">
+                  See the work
+                </Link>
+              </Reveal>
+            </div>
 
-          <Reveal delay={220} className="mt-10 flex flex-wrap items-center gap-5">
-            <a href={company.whatsapp} target="_blank" rel="noopener noreferrer" className="clay-btn">
-              Get a quote →
-            </a>
-            <Link href="/company/projects" className="clay-btn-ghost">
-              See the work
-            </Link>
-          </Reveal>
+            <Reveal delay={160} className="justify-self-start lg:justify-self-end">
+              <Image
+                src="/images/brand/mark.png"
+                alt="Sakokhule Trading mark"
+                width={196}
+                height={196}
+                priority
+                className="clay-mark-anim h-auto w-[clamp(104px,15vw,196px)]"
+              />
+            </Reveal>
+          </div>
 
           {/* The title block — Survey Line's device, pressed into the clay
               instead of ruled on paper. */}
@@ -89,31 +92,31 @@ export default function HomePage() {
               ))}
             </div>
           </Reveal>
-
-          {/* A soft contour line — the survey concept redrawn puffy: a
-              rounded stroke with clay beads at the marked stations, standing
-              in for a site plan rather than showing one. */}
-          <Reveal delay={340} className="mt-14 max-w-[42rem]">
-            <svg viewBox="0 0 640 120" className="w-full" fill="none" aria-hidden="true">
-              <path
-                d="M20 96 C 120 96, 150 40, 260 52 S 420 88, 500 34 S 600 20, 620 24"
-                stroke="var(--clay-blue)"
-                strokeWidth="5"
-                strokeLinecap="round"
-                fill="none"
-                opacity="0.55"
-              />
-              {[
-                [20, 96],
-                [260, 52],
-                [500, 34],
-                [620, 24],
-              ].map(([cx, cy], i) => (
-                <circle key={i} cx={cx} cy={cy} r={i === 0 ? 7 : 5.5} fill="var(--clay-terracotta)" opacity={i === 0 ? 1 : 0.7} />
-              ))}
-            </svg>
-          </Reveal>
         </div>
+
+        {/* The contour, moved out of the middle of the hero and run the full
+            width at the foot of the band, where it reads as the ground the
+            section stands on rather than a stray sparkline floating between
+            the title block and the next heading. */}
+        <Reveal delay={340} className="mt-12 w-full">
+          <svg
+            viewBox="0 0 640 90"
+            preserveAspectRatio="none"
+            className="h-[clamp(52px,7vw,90px)] w-full"
+            fill="none"
+            aria-hidden="true"
+          >
+            <path
+              d="M0 70 C 120 70, 150 22, 260 32 S 420 64, 500 18 S 600 8, 640 12"
+              stroke="var(--clay-blue)"
+              strokeWidth="5"
+              strokeLinecap="round"
+              fill="none"
+              opacity="0.5"
+              vectorEffect="non-scaling-stroke"
+            />
+          </svg>
+        </Reveal>
       </section>
 
       {/* ==================================================== what we do */}

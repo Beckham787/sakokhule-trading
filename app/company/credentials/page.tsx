@@ -42,7 +42,7 @@ const REGISTRATION = [
 
 export default function CredentialsPage() {
   return (
-    <>
+    <div className="clay">
       <PageHeader
         eyebrow="Credentials"
         title="Registration, grading and compliance."
@@ -83,6 +83,6 @@ export default function CredentialsPage() {
           </div>
         </div>
       </section>
-    </>
+    </div>
   );
 }

@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 
 export default function CompanyPage() {
   return (
-    <>
+    <div className="clay">
       <PageHeader
         eyebrow="Company"
         title="Built in Malelane, working across Mpumalanga."
@@ -217,6 +217,6 @@ export default function CompanyPage() {
           />
         </div>
       </section>
-    </>
+    </div>
   );
 }

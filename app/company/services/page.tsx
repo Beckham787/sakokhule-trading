@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 
 export default function ServicesPage() {
   return (
-    <>
+    <div className="clay">
       <PageHeader
         eyebrow="Services"
         title="Fourteen core business activities."
@@ -22,6 +22,6 @@ export default function ServicesPage() {
       <section aria-label="Core business activities" className="shell band pt-[clamp(1rem,2vw,2rem)]">
         <IndexList items={ACTIVITIES} />
       </section>
-    </>
+    </div>
   );
 }
