@@ -1,0 +1,557 @@
+<title>Sakokhule Brand Sheet</title>
+<meta name="description" content="The Cut Layers emblem resolved into a working brand system for Sakokhule Trading (Pty) Ltd — variants, rules, and applications.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800;900&family=IBM+Plex+Mono:wght@400;500;600&family=Quicksand:wght@400;500;600;700&family=Fredoka:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --putty:#F3ECE0; --raise:#EAE0CE; --ink:#3B322A; --ink-soft:#6E6151;
+    --mute:#746A5F; --blue:#51707C; --terracotta:#A55537;
+    --hair:rgba(59,50,42,.14); --hair-strong:rgba(59,50,42,.26);
+    --page:#E7DEC9; --hivis:#D4E157; --steel:#9AA0A6;
+  }
+  *,*::before,*::after{ box-sizing:border-box }
+  html{ background:var(--page) }
+  body{ margin:0; background:var(--page); color:var(--ink);
+        font-family:Quicksand,system-ui,sans-serif; -webkit-font-smoothing:antialiased }
+  ::selection{ background:var(--terracotta); color:#fff }
+  :focus-visible{ outline:2px solid var(--blue); outline-offset:3px }
+  img,svg{ max-width:100% }
+  .wrap{ max-width:1180px; margin:0 auto; padding:0 24px }
+  .mono{ font-family:"IBM Plex Mono",ui-monospace,monospace }
+
+  h1,h2{ font-family:Fredoka,system-ui,sans-serif; font-weight:600; margin:0 }
+  .eyebrow{ font-family:"IBM Plex Mono",monospace; font-size:12px; letter-spacing:.18em;
+            text-transform:uppercase; color:var(--mute); margin:0 0 16px }
+
+  .intro{ padding:66px 0 10px }
+  .intro h1{ font-size:clamp(28px,4vw,44px); line-height:1.1; margin-bottom:18px; max-width:20ch }
+  .intro p{ max-width:68ch; font-size:15.5px; line-height:1.7; color:var(--ink-soft); margin:0 0 14px }
+  .intro b{ color:var(--ink); font-weight:700 }
+
+  .sec{ padding:54px 0 18px; display:flex; align-items:baseline; gap:16px; flex-wrap:wrap;
+        border-top:1px solid var(--hair-strong); margin-top:34px }
+  .sec .n{ font-family:"IBM Plex Mono",monospace; font-size:12px; letter-spacing:.14em;
+           color:#fff; background:var(--ink); padding:5px 11px; border-radius:999px; flex:none }
+  .sec h2{ font-size:clamp(20px,2.5vw,26px) }
+  .sec p{ margin:0; font-size:13.5px; color:var(--mute); flex:1 1 280px; line-height:1.6 }
+
+  .panel{ background:var(--raise); border-radius:24px; padding:clamp(22px,3vw,34px);
+          box-shadow:8px 8px 20px var(--hair-strong),-5px -5px 14px rgba(255,255,255,.75) }
+  .stage{ background:var(--putty); border-radius:16px; padding:clamp(20px,3vw,34px);
+          display:flex; align-items:center; justify-content:center }
+  .cap{ font-family:"IBM Plex Mono",monospace; font-size:11px; letter-spacing:.13em;
+        text-transform:uppercase; color:var(--mute); margin-top:12px; text-align:center }
+  .note{ font-size:13.5px; line-height:1.62; color:var(--ink-soft); margin:14px 0 0 }
+  .note b{ color:var(--ink); font-weight:700 }
+
+  .grid2{ display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:22px }
+  .grid3{ display:grid; grid-template-columns:repeat(auto-fit,minmax(215px,1fr)); gap:22px }
+
+  /* ── the lockup, built in HTML not SVG text so it can never clip ── */
+  .lk{ display:flex; align-items:center; gap:.5em; color:var(--ink) }
+  .lk .ic{ flex:none; width:1.65em; height:1.65em }
+  .lk .tx .nm{ font-family:Archivo; font-weight:900; letter-spacing:-.025em; line-height:.9;
+               font-size:1em; white-space:nowrap }
+  .lk .tx .sb{ font-family:"IBM Plex Mono",monospace; font-weight:600; letter-spacing:.11em;
+               font-size:.3em; color:var(--mute); margin-top:.42em; white-space:nowrap }
+  .lk.rev{ color:var(--putty) } .lk.rev .sb{ color:rgba(243,236,224,.66) }
+
+  .lkv{ display:flex; flex-direction:column; align-items:center; gap:.55em; color:var(--ink) }
+  .lkv .ic{ width:2.5em; height:2.5em }
+  .lkv .nm{ font-family:Archivo; font-weight:900; letter-spacing:-.025em; font-size:1em; line-height:.9 }
+  .lkv .sb{ font-family:"IBM Plex Mono",monospace; font-weight:600; letter-spacing:.11em;
+            font-size:.3em; color:var(--mute); margin-top:.3em }
+  .lkv.rev{ color:var(--putty) } .lkv.rev .sb{ color:rgba(243,236,224,.66) }
+
+  /* ── clear space ── */
+  .clear{ position:relative; display:inline-block; padding:26px }
+  .clear::before{ content:""; position:absolute; inset:0; border:1.5px dashed var(--terracotta);
+                  border-radius:6px }
+  .clear .q{ position:absolute; font-family:"IBM Plex Mono",monospace; font-size:10px;
+             color:var(--terracotta) }
+  .clear .q.t{ top:7px; left:50% } .clear .q.l{ left:8px; top:50% }
+
+  /* ── palette ── */
+  .sw{ border-radius:14px; padding:16px; min-height:104px; display:flex; flex-direction:column;
+       justify-content:flex-end; font-family:"IBM Plex Mono",monospace; font-size:11px;
+       letter-spacing:.06em; box-shadow:inset 0 0 0 1px rgba(59,50,42,.1) }
+  .sw b{ display:block; font-size:12.5px; letter-spacing:.04em; margin-bottom:3px }
+
+  /* ── applications ── */
+  .door{ border-radius:10px; padding:30px 26px; display:flex; align-items:center;
+         justify-content:center; min-height:150px; position:relative; overflow:hidden }
+  .door::after{ content:""; position:absolute; left:0; right:0; bottom:0; height:7px;
+                background:rgba(0,0,0,.14) }
+  .hat{ width:150px; height:104px; position:relative; margin:0 auto }
+  .hat .dome{ position:absolute; inset:0 14px 20px 14px; background:#F5F3EE;
+              border-radius:62px 62px 8px 8px; box-shadow:inset -8px -6px 14px rgba(59,50,42,.16) }
+  .hat .brim{ position:absolute; left:0; right:0; bottom:14px; height:17px; background:#EDEAE3;
+              border-radius:999px; box-shadow:0 4px 8px rgba(59,50,42,.22) }
+  .hat .badge{ position:absolute; left:50%; top:40px; transform:translateX(-50%); z-index:2 }
+  .vest{ background:var(--hivis); border-radius:12px; padding:20px 18px; position:relative;
+         overflow:hidden; min-height:150px; display:flex; align-items:center; justify-content:center }
+  .vest .band{ position:absolute; left:0; right:0; height:15px; background:linear-gradient(180deg,#E8E8E8,#BFC3C7,#E8E8E8) }
+  .vest .band.a{ top:26px } .vest .band.b{ bottom:26px }
+
+  .a4{ background:var(--putty); border-radius:5px; aspect-ratio:1/1.414; padding:26px 22px;
+       display:flex; flex-direction:column; box-shadow:0 12px 26px rgba(59,50,42,.18);
+       border:1px solid var(--hair) }
+  .a4 .hd{ display:flex; justify-content:space-between; align-items:flex-start; gap:10px }
+  .a4 .ttl{ font-family:Archivo; font-weight:900; font-size:19px; line-height:1.04; margin-top:auto;
+            letter-spacing:-.02em }
+  .a4 .meta{ font-family:"IBM Plex Mono",monospace; font-size:8.5px; letter-spacing:.09em;
+             color:var(--mute); line-height:1.9; margin-top:12px; border-top:1px solid var(--hair);
+             padding-top:10px }
+  .a4 .bars{ height:5px; display:flex; gap:3px; margin-top:12px }
+  .a4 .bars i{ flex:1; border-radius:999px }
+
+  .card{ aspect-ratio:1.545/1; border-radius:9px; padding:20px; display:flex;
+         box-shadow:0 10px 22px rgba(59,50,42,.2) }
+  .card.f{ background:var(--putty); align-items:center; justify-content:center }
+  .card.b{ background:var(--ink); flex-direction:column; justify-content:space-between }
+  .card.b .d{ font-family:"IBM Plex Mono",monospace; font-size:9px; letter-spacing:.07em;
+              color:rgba(243,236,224,.82); line-height:2 }
+
+  .board{ background:var(--blue); border-radius:8px; padding:24px 20px; color:var(--putty);
+          position:relative; overflow:hidden; min-height:190px; display:flex;
+          flex-direction:column; justify-content:space-between }
+  .board .rule{ height:6px; background:var(--terracotta); border-radius:999px; margin:14px 0 }
+  .board .l{ font-family:"IBM Plex Mono",monospace; font-size:10px; letter-spacing:.11em;
+             color:rgba(243,236,224,.8); line-height:1.9 }
+
+  .avatars{ display:flex; align-items:flex-end; gap:20px; flex-wrap:wrap; justify-content:center }
+  .av{ background:var(--ink); border-radius:22%; display:flex; align-items:center;
+       justify-content:center; flex:none }
+  .av.r{ border-radius:999px }
+  .avl{ text-align:center; font-family:"IBM Plex Mono",monospace; font-size:10px;
+        color:var(--mute); margin-top:8px; letter-spacing:.08em }
+
+  .stamp{ border:2.5px solid var(--ink); border-radius:6px; padding:12px 16px; display:inline-block;
+          transform:rotate(-3deg) }
+  .stamp .s1{ font-family:Archivo; font-weight:900; font-size:15px; letter-spacing:-.01em }
+  .stamp .s2{ font-family:"IBM Plex Mono",monospace; font-size:8px; letter-spacing:.1em;
+              color:var(--ink-soft); margin-top:3px }
+
+  footer{ padding:34px 0 90px; border-top:1px solid var(--hair-strong); margin-top:44px }
+  footer p{ margin:0 0 12px; font-size:14px; line-height:1.7; color:var(--ink-soft); max-width:66ch }
+  footer b{ color:var(--ink); font-weight:700 }
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <!-- Four bars, right-aligned, deepening. Geometry checked so every round cap
+       stays inside the 0-100 box: widest bar is 14, so its cap reaches x=3 and
+       y=90, both clear of the edge. -->
+  <symbol id="mark4" viewBox="0 0 100 100">
+    <g stroke-linecap="round" fill="none">
+      <line x1="28" y1="16" x2="76" y2="23" stroke="#3B322A" stroke-width="8"/>
+      <line x1="22" y1="34" x2="76" y2="43" stroke="#6E6151" stroke-width="10"/>
+      <line x1="16" y1="52" x2="76" y2="63" stroke="#51707C" stroke-width="12"/>
+      <line x1="10" y1="70" x2="76" y2="83" stroke="#A55537" stroke-width="14"/>
+    </g>
+  </symbol>
+  <symbol id="mark4m" viewBox="0 0 100 100">
+    <g stroke-linecap="round" fill="none" stroke="currentColor">
+      <line x1="28" y1="16" x2="76" y2="23" stroke-width="8"/>
+      <line x1="22" y1="34" x2="76" y2="43" stroke-width="10"/>
+      <line x1="16" y1="52" x2="76" y2="63" stroke-width="12"/>
+      <line x1="10" y1="70" x2="76" y2="83" stroke-width="14"/>
+    </g>
+  </symbol>
+  <!-- Three bars, heavier, for small sizes. See the small-size note. -->
+  <symbol id="mark3" viewBox="0 0 100 100">
+    <g stroke-linecap="round" fill="none">
+      <line x1="30" y1="24" x2="74" y2="32" stroke="#3B322A" stroke-width="14"/>
+      <line x1="21" y1="50" x2="74" y2="60" stroke="#51707C" stroke-width="16"/>
+      <line x1="12" y1="76" x2="74" y2="88" stroke="#A55537" stroke-width="18"/>
+    </g>
+  </symbol>
+  <symbol id="mark3m" viewBox="0 0 100 100">
+    <g stroke-linecap="round" fill="none" stroke="currentColor">
+      <line x1="30" y1="24" x2="74" y2="32" stroke-width="14"/>
+      <line x1="21" y1="50" x2="74" y2="60" stroke-width="16"/>
+      <line x1="12" y1="76" x2="74" y2="88" stroke-width="18"/>
+    </g>
+  </symbol>
+</svg>
+
+<div class="wrap">
+
+  <section class="intro">
+    <p class="eyebrow">Sakokhule Trading (Pty) Ltd &middot; brand sheet</p>
+    <h1>The emblem, made to work everywhere.</h1>
+    <p>You picked <b>Cut Layers Emblem</b> &mdash; icon and name as one unit,
+      sharing a baseline. This sheet takes it from a single drawing to a
+      system: the variants it needs, the one rule that stops it breaking,
+      and what it looks like on the surfaces this company actually owns
+      &mdash; a machine door, a hard hat, a tender cover, a site board.</p>
+    <p>No photographs anywhere, deliberately. Everything below is drawn
+      vector, so nothing depends on a photo library that doesn't exist yet,
+      and every mockup is the real artwork rather than a picture of it.</p>
+  </section>
+
+  <!-- ════════ 01 — THE MARK ════════ -->
+  <div class="sec"><span class="n">01</span><h2>The mark</h2>
+    <p>One primary lockup, plus the four variants that cover every real use.</p></div>
+
+  <div class="panel">
+    <div class="stage" style="padding:46px 26px">
+      <div class="lk" style="font-size:clamp(30px,5.4vw,52px)">
+        <svg class="ic"><use href="#mark4"/></svg>
+        <div class="tx"><div class="nm">SAKOKHULE</div><div class="sb">TRADING (PTY) LTD</div></div>
+      </div>
+    </div>
+    <p class="cap">Primary horizontal lockup</p>
+    <p class="note">The default. Use this anywhere there's width for it &mdash;
+      website header, letterhead, machine door, email signature.</p>
+  </div>
+
+  <div class="grid3" style="margin-top:22px">
+    <div class="panel">
+      <div class="stage" style="min-height:190px">
+        <div class="lkv" style="font-size:26px">
+          <svg class="ic"><use href="#mark4"/></svg>
+          <div><div class="nm">SAKOKHULE</div><div class="sb" style="text-align:center">TRADING (PTY) LTD</div></div>
+        </div>
+      </div>
+      <p class="cap">Stacked</p>
+      <p class="note">For square and narrow spaces &mdash; a site board,
+        a social profile, the back of a hi-vis.</p>
+    </div>
+
+    <div class="panel">
+      <div class="stage" style="min-height:190px">
+        <svg style="width:104px;height:104px"><use href="#mark4"/></svg>
+      </div>
+      <p class="cap">Icon only</p>
+      <p class="note">Once the name is already established on the surface
+        &mdash; an app icon, a stamped tool, a watermark.</p>
+    </div>
+
+    <div class="panel">
+      <div class="stage" style="min-height:190px">
+        <div class="lkv" style="font-size:26px;color:var(--ink)">
+          <svg class="ic" style="color:var(--ink)"><use href="#mark4m"/></svg>
+          <div><div class="nm">SAKOKHULE</div><div class="sb" style="text-align:center;color:var(--ink-soft)">TRADING (PTY) LTD</div></div>
+        </div>
+      </div>
+      <p class="cap">One colour</p>
+      <p class="note">Embroidery, rubber stamp, fax, laser-etched plate,
+        single-colour vinyl. Anywhere four inks aren't possible.</p>
+    </div>
+  </div>
+
+  <div class="panel" style="margin-top:22px">
+    <div class="stage" style="background:var(--ink);padding:46px 26px">
+      <div class="lk rev" style="font-size:clamp(28px,5vw,48px)">
+        <svg class="ic" style="color:var(--putty)"><use href="#mark4m"/></svg>
+        <div class="tx"><div class="nm">SAKOKHULE</div><div class="sb">TRADING (PTY) LTD</div></div>
+      </div>
+    </div>
+    <p class="cap">Reversed</p>
+    <p class="note">On ink, on a dark machine panel, on a photograph. The
+      bars go to a single putty tone here rather than keeping their four
+      colours &mdash; <b>blue and terracotta both lose too much separation
+      against a dark ground to be worth keeping.</b></p>
+  </div>
+
+  <!-- ════════ 02 — THE RULE ════════ -->
+  <div class="sec"><span class="n">02</span><h2>The one rule that matters</h2>
+    <p>Four fine bars is a print problem waiting to happen. This is the fix.</p></div>
+
+  <div class="panel">
+    <div class="grid2">
+      <div>
+        <div class="stage" style="min-height:200px;gap:26px;align-items:flex-end">
+          <div style="text-align:center">
+            <svg style="width:74px;height:74px"><use href="#mark4"/></svg>
+            <div class="avl">72px &mdash; fine</div>
+          </div>
+          <div style="text-align:center">
+            <svg style="width:30px;height:30px"><use href="#mark4"/></svg>
+            <div class="avl">30px &mdash; closing up</div>
+          </div>
+          <div style="text-align:center">
+            <svg style="width:17px;height:17px"><use href="#mark4"/></svg>
+            <div class="avl">16px &mdash; mud</div>
+          </div>
+        </div>
+        <p class="cap">Four bars, shrinking</p>
+      </div>
+      <div>
+        <div class="stage" style="min-height:200px;gap:26px;align-items:flex-end">
+          <div style="text-align:center">
+            <svg style="width:74px;height:74px"><use href="#mark3"/></svg>
+            <div class="avl">72px</div>
+          </div>
+          <div style="text-align:center">
+            <svg style="width:30px;height:30px"><use href="#mark3"/></svg>
+            <div class="avl">30px</div>
+          </div>
+          <div style="text-align:center">
+            <svg style="width:17px;height:17px"><use href="#mark3"/></svg>
+            <div class="avl">16px &mdash; still reads</div>
+          </div>
+        </div>
+        <p class="cap">Three bars, heavier &mdash; the small-size cut</p>
+      </div>
+    </div>
+    <p class="note"><b>Below roughly 24px on screen, or 10mm in print, switch
+      to the three-bar cut.</b> The top bar in the four-bar mark is 8 units
+      wide in a 100-unit box &mdash; at 16px that's 1.3px, and it either
+      disappears or merges into its neighbour depending on the printer. The
+      three-bar version drops the weakest tone (the soft brown), thickens
+      what's left and keeps the ink&rarr;blue&rarr;terracotta signature, so
+      the mark stays recognisably the same object at a tenth the size.</p>
+  </div>
+
+  <div class="panel" style="margin-top:22px">
+    <div class="stage" style="min-height:190px">
+      <div class="clear">
+        <span class="q t">x</span><span class="q l">x</span>
+        <div class="lk" style="font-size:30px">
+          <svg class="ic"><use href="#mark4"/></svg>
+          <div class="tx"><div class="nm">SAKOKHULE</div><div class="sb">TRADING (PTY) LTD</div></div>
+        </div>
+      </div>
+    </div>
+    <p class="cap">Clear space</p>
+    <p class="note">Keep clear space of <b>x</b> on every side, where x is the
+      thickness of the bottom terracotta bar. Nothing &mdash; no rule, no
+      photo edge, no other logo &mdash; comes inside it. It scales with the
+      mark, so there's one number to remember instead of a table.</p>
+  </div>
+
+  <!-- ════════ 03 — PALETTE ════════ -->
+  <div class="sec"><span class="n">03</span><h2>Palette</h2>
+    <p>Unchanged from the live site &mdash; the mark was built to drop in without a repaint.</p></div>
+
+  <div class="panel">
+    <div class="grid3">
+      <div class="sw" style="background:#3B322A;color:#F3ECE0"><b>Ink</b>#3B322A</div>
+      <div class="sw" style="background:#6E6151;color:#F3ECE0"><b>Ink soft</b>#6E6151</div>
+      <div class="sw" style="background:#51707C;color:#F3ECE0"><b>Clay blue</b>#51707C</div>
+      <div class="sw" style="background:#A55537;color:#F3ECE0"><b>Terracotta</b>#A55537</div>
+      <div class="sw" style="background:#F3ECE0;color:#3B322A"><b>Putty</b>#F3ECE0</div>
+      <div class="sw" style="background:#EAE0CE;color:#3B322A"><b>Putty raise</b>#EAE0CE</div>
+    </div>
+    <p class="note">The four bars <b>are</b> the palette &mdash; top to bottom,
+      the mark states the whole system in order. Blue and terracotta are the
+      old logo's steel and red, already darkened to clear 4.5:1 on putty, so
+      every one of these pairs is measured rather than eyeballed.</p>
+  </div>
+
+  <!-- ════════ 04 — ON THE PLANT ════════ -->
+  <div class="sec"><span class="n">04</span><h2>On the plant</h2>
+    <p>The most-seen surface this company owns. Two panel colours, because
+      the fleet isn't one colour.</p></div>
+
+  <div class="panel">
+    <div class="grid2">
+      <div>
+        <div class="door" style="background:#E4E2DC">
+          <div class="lk" style="font-size:26px">
+            <svg class="ic"><use href="#mark4"/></svg>
+            <div class="tx"><div class="nm">SAKOKHULE</div><div class="sb">TRADING (PTY) LTD</div></div>
+          </div>
+        </div>
+        <p class="cap">Light panel &mdash; full colour</p>
+      </div>
+      <div>
+        <div class="door" style="background:#2F3337">
+          <div class="lk rev" style="font-size:26px">
+            <svg class="ic" style="color:var(--putty)"><use href="#mark4m"/></svg>
+            <div class="tx"><div class="nm">SAKOKHULE</div><div class="sb">TRADING (PTY) LTD</div></div>
+          </div>
+        </div>
+        <p class="cap">Dark panel &mdash; reversed, one colour</p>
+      </div>
+    </div>
+    <p class="note">Cut as vinyl, it's two decals rather than one artwork:
+      full colour for light machines, single putty for dark ones. Both sit
+      on the door's flat centre panel with the clear-space rule kept &mdash;
+      <b>not wrapped over a hinge line or a rivet seam</b>, which is where
+      most contractor decals end up bent and unreadable.</p>
+  </div>
+
+  <!-- ════════ 05 — PPE ════════ -->
+  <div class="sec"><span class="n">05</span><h2>On the crew</h2>
+    <p>Small, one colour, and competing with hi-vis. The three-bar cut earns its keep here.</p></div>
+
+  <div class="panel">
+    <div class="grid2">
+      <div>
+        <div class="stage" style="min-height:190px">
+          <div class="hat">
+            <div class="dome"></div>
+            <div class="badge">
+              <svg style="width:30px;height:30px;display:block;margin:0 auto"><use href="#mark3"/></svg>
+            </div>
+            <div class="brim"></div>
+          </div>
+        </div>
+        <p class="cap">Hard hat &mdash; three-bar, 30mm</p>
+      </div>
+      <div>
+        <div class="vest">
+          <div class="band a"></div><div class="band b"></div>
+          <div class="lk" style="font-size:20px;position:relative;z-index:2">
+            <svg class="ic" style="color:var(--ink)"><use href="#mark4m"/></svg>
+            <div class="tx"><div class="nm">SAKOKHULE</div><div class="sb" style="color:rgba(59,50,42,.7)">TRADING (PTY) LTD</div></div>
+          </div>
+        </div>
+        <p class="cap">Hi-vis chest &mdash; one colour, ink</p>
+      </div>
+    </div>
+    <p class="note">On hi-vis the mark goes <b>one-colour ink</b>, never full
+      colour: terracotta on lime is a genuinely bad pairing, and PPE is
+      printed or embroidered in as few threads as possible anyway. Ink on
+      hi-vis lime measures well past 4.5:1, so it stays legible at the
+      distance a flagman is actually seen from.</p>
+  </div>
+
+  <!-- ════════ 06 — PAPER ════════ -->
+  <div class="sec"><span class="n">06</span><h2>On paper</h2>
+    <p>Where this company actually wins work &mdash; tender covers and a card
+      handed across a bakkie bonnet.</p></div>
+
+  <div class="panel">
+    <div class="grid3">
+      <div>
+        <div class="a4">
+          <div class="hd">
+            <div class="lk" style="font-size:15px">
+              <svg class="ic"><use href="#mark4"/></svg>
+              <div class="tx"><div class="nm">SAKOKHULE</div><div class="sb">TRADING (PTY) LTD</div></div>
+            </div>
+          </div>
+          <div class="ttl">Company<br>profile &amp;<br>capability<br>statement</div>
+          <div class="bars">
+            <i style="background:#3B322A"></i><i style="background:#6E6151"></i>
+            <i style="background:#51707C"></i><i style="background:#A55537"></i>
+          </div>
+          <div class="meta">
+            CIDB 5CE &middot; 3GB<br>
+            REG 2016/069270/07<br>
+            MALELANE, MPUMALANGA
+          </div>
+        </div>
+        <p class="cap">Tender cover, A4</p>
+      </div>
+
+      <div>
+        <div class="card f">
+          <div class="lkv" style="font-size:18px">
+            <svg class="ic"><use href="#mark4"/></svg>
+            <div><div class="nm">SAKOKHULE</div><div class="sb" style="text-align:center">TRADING (PTY) LTD</div></div>
+          </div>
+        </div>
+        <p class="cap">Card, front</p>
+      </div>
+
+      <div>
+        <div class="card b">
+          <svg style="width:26px;height:26px;color:var(--putty)"><use href="#mark3m"/></svg>
+          <div class="d">
+            LINDOKUHLE TEDDY MHLONGO<br>
+            FOUNDER &amp; MANAGING DIRECTOR<br>
+            076 299 6824 &middot; 060 832 6712<br>
+            38 STATION STREET, MALELANE 1320
+          </div>
+        </div>
+        <p class="cap">Card, back</p>
+      </div>
+    </div>
+    <p class="note">The four bars reappear as a rule across the tender cover
+      &mdash; the mark's own geometry doing a second job as a page device,
+      which is how a small system stays coherent without needing more parts.
+      Every fact printed here is one already on the site or the CIPC record:
+      <b>nothing invented for the mockup.</b></p>
+  </div>
+
+  <!-- ════════ 07 — SITE & SCREEN ════════ -->
+  <div class="sec"><span class="n">07</span><h2>On site, and on screen</h2>
+    <p>Read at forty metres, and read at sixteen pixels.</p></div>
+
+  <div class="panel">
+    <div class="grid2">
+      <div>
+        <div class="board">
+          <div class="lk rev" style="font-size:21px">
+            <svg class="ic" style="color:var(--putty)"><use href="#mark4m"/></svg>
+            <div class="tx"><div class="nm">SAKOKHULE</div><div class="sb">TRADING (PTY) LTD</div></div>
+          </div>
+          <div class="rule"></div>
+          <div class="l">
+            EARTH MOVING &amp; PLANT HIRE<br>
+            ENQUIRIES &middot; 060 832 6712
+          </div>
+        </div>
+        <p class="cap">Site board</p>
+      </div>
+      <div>
+        <div class="stage" style="min-height:190px">
+          <div class="avatars">
+            <div>
+              <div class="av r" style="width:82px;height:82px">
+                <svg style="width:46px;height:46px;color:var(--putty)"><use href="#mark3m"/></svg>
+              </div>
+              <div class="avl">Profile</div>
+            </div>
+            <div>
+              <div class="av" style="width:52px;height:52px">
+                <svg style="width:30px;height:30px;color:var(--putty)"><use href="#mark3m"/></svg>
+              </div>
+              <div class="avl">App</div>
+            </div>
+            <div>
+              <div class="av" style="width:32px;height:32px;border-radius:7px">
+                <svg style="width:19px;height:19px;color:var(--putty)"><use href="#mark3m"/></svg>
+              </div>
+              <div class="avl">32px</div>
+            </div>
+            <div>
+              <div class="av" style="width:16px;height:16px;border-radius:4px">
+                <svg style="width:10px;height:10px;color:var(--putty)"><use href="#mark3m"/></svg>
+              </div>
+              <div class="avl">16px</div>
+            </div>
+          </div>
+        </div>
+        <p class="cap">Avatar &amp; favicon &mdash; three-bar, reversed on ink</p>
+      </div>
+    </div>
+    <p class="note">Digital icons run <b>reversed on an ink tile</b> rather
+      than bars-on-putty. A cream favicon disappears against a light browser
+      tab &mdash; the exact bug found and fixed on Izanolihle's site this
+      week, worth not repeating here.</p>
+  </div>
+
+  <div class="panel" style="margin-top:22px">
+    <div class="stage" style="min-height:150px">
+      <div class="stamp">
+        <div class="s1">SAKOKHULE TRADING (PTY) LTD</div>
+        <div class="s2">REG 2016/069270/07 &middot; MALELANE &middot; CIDB 5CE&middot;3GB</div>
+      </div>
+    </div>
+    <p class="cap">Document stamp &mdash; one colour</p>
+    <p class="note">For signed returnables and delivery notes. Wordmark only,
+      no icon: at stamp resolution on a rubber die the bars would fill in
+      solid, and <b>the registration number is the thing a clerk is actually
+      checking for.</b></p>
+  </div>
+
+  <footer>
+    <p><b>Still nothing touching the live site.</b> Next step, when you're
+      happy: I cut this into real files &mdash; SVG and PNG in all four
+      variants, favicon and app icons, the OG card, and the header lockup
+      wired into <span class="mono">globals.css</span> &mdash; then the
+      Sakokhule site header and the company-profile PDF both swap over in
+      one pass.</p>
+    <p>One thing worth deciding before that: the site's display face is
+      currently <b>Fredoka</b>, but this lockup is set in <b>Archivo</b>.
+      They can coexist (mark in Archivo, headings in Fredoka), or the site
+      moves to Archivo and reads harder and more industrial throughout. Your
+      call &mdash; it changes the whole site's temperature, not just the logo.</p>
+  </footer>
+</div>
