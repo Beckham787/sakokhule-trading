@@ -4,7 +4,7 @@ import IndexList from "@/components/IndexList";
 import { ACTIVITIES } from "@/lib/content";
 
 export const metadata: Metadata = {
-  title: "Services",
+  title: "Earth moving & plant hire services",
   description:
     "The fourteen core business activities of Sakokhule Trading — building and civil construction, concrete, steel, paving, road renovation, bridges, water and waste systems, signage, culverts and guardrails.",
   alternates: { canonical: "/company/services" },

@@ -3,7 +3,7 @@ import localFont from "next/font/local";
 import { Analytics } from "@vercel/analytics/next";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
-import { company } from "@/lib/content";
+import { DISCIPLINES, company } from "@/lib/content";
 import "./globals.css";
 
 /* Self-hosted, as on every site in the group — the Google Fonts CDN hangs
@@ -70,14 +70,17 @@ const quicksand = localFont({
 export const metadata: Metadata = {
   metadataBase: new URL(company.siteUrl),
   title: {
-    default: `${company.businessName} — earth moving & plant hire, Mpumalanga`,
+    default: `${company.businessName} — earth moving & plant hire, Malelane, Mpumalanga`,
     template: `%s — ${company.businessName}`,
   },
   description:
     "Earth moving and plant hire in Malelane, Mpumalanga. Bulk earthworks, load and haul, road layers and machine hire with operators — CIDB 5CE·3GB graded, trading since 2016.",
   openGraph: {
     type: "website",
-    title: `${company.businessName} — civil engineering & construction, Mpumalanga`,
+    /* Matches the page title and the logo's own line (lib/content.ts). */
+    title: `${company.businessName} — earth moving & plant hire, Malelane`,
+    description:
+      "Bulk earthworks, load and haul, road layers and machine hire with operators, out of Malelane, Mpumalanga. CIDB 5CE·3GB.",
     siteName: company.businessName,
     locale: "en_ZA",
   },
@@ -88,6 +91,7 @@ export const metadata: Metadata = {
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "GeneralContractor",
+  "@id": `${company.siteUrl}/#organization`,
   name: company.businessName,
   legalName: company.legalName,
   url: company.siteUrl,
@@ -101,9 +105,25 @@ const jsonLd = {
     addressRegion: "Mpumalanga",
     addressCountry: "ZA",
   },
-  telephone: company.phones[0],
+  logo: `${company.siteUrl}/images/brand/logo.png`,
+  image: `${company.siteUrl}/opengraph-image.png`,
+  /* "076 299 6824" -> "+27762996824" */
+  telephone: `+27${company.phones[0].replace(/\s/g, "").slice(1)}`,
   email: company.email,
-  areaServed: { "@type": "AdministrativeArea", name: company.region },
+  areaServed: [
+    { "@type": "City", name: "Malelane" },
+    { "@type": "AdministrativeArea", name: company.region },
+  ],
+  foundingDate: "2016",
+  /* The two halves of the business, as the logo states them. */
+  hasOfferCatalog: {
+    "@type": "OfferCatalog",
+    name: "Services",
+    itemListElement: DISCIPLINES.map((d) => ({
+      "@type": "Offer",
+      itemOffered: { "@type": "Service", name: d.name, description: d.body },
+    })),
+  },
   founder: { "@type": "Person", name: company.principal },
 };
 

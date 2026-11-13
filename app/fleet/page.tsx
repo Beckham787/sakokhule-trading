@@ -8,7 +8,7 @@ import { FLEET } from "@/lib/fleet";
 import { company } from "@/lib/content";
 
 export const metadata: Metadata = {
-  title: "Fleet & hire",
+  title: "Plant hire fleet, Malelane",
   description:
     "Plant hire from Sakokhule Trading — TATA tipper, Galion motor grader, Caterpillar backhoe loader and Powerstar water tanker, owned and operated out of Malelane, Mpumalanga.",
   alternates: { canonical: "/fleet" },

@@ -11,7 +11,12 @@ export const company = {
   businessName: "Sakokhule Trading",
   legalName: "Sakokhule Trading (Pty) Ltd",
 
-  siteUrl: "https://www.sakokhuletrading.co.za",
+  /* The address the site is really served from. Until 2026-11-13 this read
+     www.sakokhuletrading.co.za, a domain that was never registered, so the
+     canonical tags, sitemap and robots.txt all pointed search engines at a
+     dead address. Change it here, in one place, on the day a real domain is
+     attached in Vercel. */
+  siteUrl: "https://sakokhule-trading.vercel.app",
 
   /* Straight off the client's own logo, supplied 2026-09-06: "Earth
      moving and Plant hire". It supersedes the "civil engineering &
